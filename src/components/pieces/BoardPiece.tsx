@@ -1,4 +1,4 @@
-import { PieceColor, PieceName } from "@/types/chessPieces";
+import { Color, PieceSymbol } from "chess.js";
 import React from "react";
 import Bishop from "./Bishop";
 import King from "./King";
@@ -8,19 +8,19 @@ import Queen from "./Queen";
 import Rook from "./Rook";
 
 interface IProps extends React.SVGProps<SVGSVGElement> {
-  color: PieceColor;
-  piece: PieceName;
+  color: Color;
+  piece: PieceSymbol;
 }
 
 const BoardPiece = ({ piece, ...rest }: IProps) => {
   return (
     <>
-      {piece === "pawn" && <Pawn {...rest} />}
-      {piece === "knight" && <Knight {...rest} />}
-      {piece === "bishop" && <Bishop {...rest} />}
-      {piece === "rook" && <Rook {...rest} />}
-      {piece === "queen" && <Queen {...rest} />}
-      {piece === "king" && <King {...rest} />}
+      {piece === "p" && <Pawn {...rest} />}
+      {piece === "n" && <Knight {...rest} />}
+      {piece === "b" && <Bishop {...rest} />}
+      {piece === "r" && <Rook {...rest} />}
+      {piece === "q" && <Queen {...rest} />}
+      {piece === "k" && <King {...rest} />}
     </>
   );
 };

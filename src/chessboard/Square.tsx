@@ -27,7 +27,7 @@ const Square = ({ rank, file, className, children, ...rest }: IProps) => {
       "absolute font-semibold text-[2vmin] pointer-events-none select-none",
       {
         "top-1 left-1": type === "file",
-        "bottom-0 right-2": type === "rank",
+        "bottom-0 right-1": type === "rank",
         "text-olive-50":
           (rank + fileToValue(file)) % 2 === 0 && theme === "olive",
         "text-olive-600":
