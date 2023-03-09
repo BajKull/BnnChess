@@ -7,17 +7,20 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   file: ChessboardFile;
 }
 
-const Square = ({ rank, file, className, ...rest }: IProps) => {
+const Square = ({ rank, file, className, children, ...rest }: IProps) => {
   const theme: string = "olive";
-  const clsSquare = classnames("block w-full h-full relative", {
-    "bg-olive-50": (rank + fileToValue(file)) % 2 !== 0 && theme === "olive",
-    "bg-olive-600": (rank + fileToValue(file)) % 2 === 0 && theme === "olive",
-    "bg-chestnut-50":
-      (rank + fileToValue(file)) % 2 !== 0 && theme === "chestnut",
-    "bg-chestnut-600":
-      (rank + fileToValue(file)) % 2 === 0 && theme === "chestnut",
-    className,
-  });
+  const clsSquare = classnames(
+    "w-full h-full relative flex items-center justify-center",
+    {
+      "bg-olive-50": (rank + fileToValue(file)) % 2 !== 0 && theme === "olive",
+      "bg-olive-600": (rank + fileToValue(file)) % 2 === 0 && theme === "olive",
+      "bg-chestnut-50":
+        (rank + fileToValue(file)) % 2 !== 0 && theme === "chestnut",
+      "bg-chestnut-600":
+        (rank + fileToValue(file)) % 2 === 0 && theme === "chestnut",
+      className,
+    }
+  );
 
   const clsText = (type: "file" | "rank") =>
     classnames(
@@ -38,10 +41,10 @@ const Square = ({ rank, file, className, ...rest }: IProps) => {
     );
 
   return (
-    <div className={clsSquare}>
+    <div className={clsSquare} {...rest}>
       {rank === 1 && <label className={clsText("rank")}>{file}</label>}
       {file === "a" && <label className={clsText("file")}>{rank}</label>}
-      <p className="select-none"></p>
+      {children}
     </div>
   );
 };
