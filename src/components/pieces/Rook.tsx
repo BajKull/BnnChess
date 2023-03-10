@@ -20,7 +20,7 @@ const Rook = ({ color, ...rest }: IProps) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeMiterlimit={4}
-        stroke-width="1.5"
+        strokeWidth="1.5"
       >
         <path d="M 9,39 L 36,39 L 36,36 L 9,36 L 9,39 z " />
         <path d="M 12.5,32 L 14,29.5 L 31,29.5 L 32.5,32 L 12.5,32 z " />

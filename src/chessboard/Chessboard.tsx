@@ -13,20 +13,17 @@ const Chessboard = () => {
   const position = color === "white" ? [...ranks].reverse() : ranks;
   const board = game.board();
 
-  console.log(game.board(), game.turn());
-
   return (
     <div className="flex h-full w-full flex-col">
       {position.map((rank, i) => (
         <div key={nanoid()} className="flex h-[12.5%] w-full">
           {files.map((file, j) => (
             <div className="h-full w-[12.5%]" key={nanoid()}>
-              <Square rank={rank} file={file}>
+              <Square rank={rank} file={file} occupied={board[i][j] !== null}>
                 {board[i][j] !== null && (
                   <BoardPiece
                     color={board[i][j]!.color}
                     piece={board[i][j]!.type}
-                    className="z-10"
                   />
                 )}
               </Square>
