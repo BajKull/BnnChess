@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="flex h-[100vh] w-full items-center justify-center bg-zinc-900">
       <div
-        className="overflow-hidden rounded"
+        className="relative overflow-hidden rounded"
         style={{
           height: "80vmin",
           width: "80vmin",

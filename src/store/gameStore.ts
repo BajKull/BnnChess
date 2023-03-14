@@ -1,12 +1,12 @@
 import { Chess } from "chess.js";
 import { create } from "zustand";
 
-interface MidiPlayingTimestamp {
+interface GameStore {
   game: Chess;
   setGame: (g: Chess) => void;
 }
 
-export const useGameStore = create<MidiPlayingTimestamp>((set) => ({
+export const useGameStore = create<GameStore>((set) => ({
   game: new Chess(),
   setGame: (g) => set(() => ({ game: g })),
 }));
