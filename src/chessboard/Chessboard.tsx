@@ -7,6 +7,7 @@ import Square from "./Square";
 import BoardPiece from "@/components/pieces/BoardPiece";
 import { useGameStore } from "@/store/gameStore";
 import HoverHighlight from "./HoverHighlight";
+import HelpMoveDots from "./HelpMoveDots";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -35,6 +36,7 @@ const Chessboard = () => {
         ))}
       </div>
       <HoverHighlight />
+      <HelpMoveDots />
     </>
   );
 };

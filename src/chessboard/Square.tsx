@@ -22,6 +22,7 @@ const Square = ({
 }: IProps) => {
   const togglePieceDrag = usePieceStore((state) => state.toggleIsPieceDragged);
   const setDraggingOver = usePieceStore((state) => state.setDraggingOver);
+  const setDraggedPiece = usePieceStore((state) => state.setDraggedPiece);
   const [style, api] = useSpring(() => ({
     x: 0,
     y: 0,
@@ -47,7 +48,10 @@ const Square = ({
       if (!pos) return;
       setDraggingOver(pos);
     },
-    onDragStart: () => togglePieceDrag(),
+    onDragStart: () => {
+      togglePieceDrag();
+      setDraggedPiece({ rank, file });
+    },
     onDragEnd: ({ xy }) => {
       togglePieceDrag();
       const dropPlaceEls = document.elementsFromPoint(xy[0], xy[1]);

@@ -17,6 +17,7 @@ const HoverHighlight = () => {
           translateY(-${(draggingOver?.rank || 0) * 100 - 100}%)
         `,
       }}
+      shapeRendering="crispEdges"
     >
       <rect
         x="0"
