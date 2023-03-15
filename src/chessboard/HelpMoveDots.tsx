@@ -2,6 +2,7 @@ import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
 import { ChessboardFile } from "@/types/chessboard";
 import { Square } from "chess.js";
+import classNames from "classnames";
 import { nanoid } from "nanoid";
 import React from "react";
 import { fileToValue } from "./utils";
@@ -19,24 +20,35 @@ const HelpMoveDots = () => {
   return (
     <>
       {moves.map((m) => (
-        <MoveDot position={m.to} key={nanoid()} />
+        <MoveDot position={m.to} flags={m.flags} key={nanoid()} />
       ))}
     </>
   );
 };
 
-const MoveDot = ({ position }: { position: Square }) => {
+const MoveDot = ({ position, flags }: { position: Square; flags: string }) => {
   const [file, rank] = position.split("");
+
   return (
-    <div
-      className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%] rounded-full bg-black bg-opacity-10 bg-clip-content p-[4%]"
+    <svg
+      viewBox="0 0 100 100"
+      className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%]"
       style={{
         transform: `
-      translateX(${fileToValue(file as ChessboardFile) * 100 - 100}%)
-      translateY(-${(parseInt(rank) || 0) * 100 - 100}%)
-    `,
+          translateX(${fileToValue(file as ChessboardFile) * 100 - 100}%)
+          translateY(-${(parseInt(rank) || 0) * 100 - 100}%)
+        `,
       }}
-    ></div>
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r={flags.includes("c") ? 44 : 17}
+        fill={flags.includes("c") ? "none" : "rgba(0, 0, 0, 0.1)"}
+        stroke="rgba(0, 0, 0, 0.1)"
+        strokeWidth={flags.includes("c") ? 10 : 0}
+      />
+    </svg>
   );
 };
 
