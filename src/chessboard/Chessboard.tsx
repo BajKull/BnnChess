@@ -9,24 +9,28 @@ import { useGameStore } from "@/store/gameStore";
 import HoverHighlight from "./HoverHighlight";
 import HelpMoveDots from "./HelpMoveDots";
 
+const PLAYER = "white";
+
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
-  const color = game.turn() === "w" ? "white" : "black";
-  const position = color === "white" ? [...ranks].reverse() : ranks;
-  const board = game.board();
+  const boardToRender = useGameStore((state) => state.boardToRender);
 
   return (
     <>
       <div className="flex h-full w-full flex-col">
-        {position.map((rank, i) => (
+        {[...ranks].reverse().map((rank, i) => (
           <div key={nanoid()} className="flex h-[12.5%] w-full">
             {files.map((file, j) => (
               <div className="h-full w-[12.5%]" key={nanoid()}>
-                <Square rank={rank} file={file} occupied={board[i][j] !== null}>
-                  {board[i][j] !== null && (
+                <Square
+                  rank={rank}
+                  file={file}
+                  occupiedBy={game.get(`${file}${rank}`)}
+                >
+                  {boardToRender[i][j] !== null && (
                     <BoardPiece
-                      color={board[i][j]!.color}
-                      piece={board[i][j]!.type}
+                      color={boardToRender[i][j]!.color}
+                      piece={boardToRender[i][j]!.type}
                     />
                   )}
                 </Square>

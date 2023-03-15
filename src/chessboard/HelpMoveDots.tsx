@@ -27,7 +27,6 @@ const HelpMoveDots = () => {
 
 const MoveDot = ({ position }: { position: Square }) => {
   const [file, rank] = position.split("");
-  console.log(file, rank);
   return (
     <div
       className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%] rounded-full bg-black bg-opacity-10 bg-clip-content p-[4%]"

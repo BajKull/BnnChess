@@ -1,15 +1,17 @@
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
-import React from "react";
+import React, { useRef } from "react";
 import classnames from "classnames";
 import { a, useSpring } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { DraggedPiece, usePieceStore } from "@/store/pieceStore";
 import { fileToValue } from "./utils";
+import { Piece } from "chess.js";
+import useChessActions from "@/hooks/useChessActions";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   rank: ChessboardRank;
   file: ChessboardFile;
-  occupied: boolean;
+  occupiedBy: Piece | null;
 }
 
 const Square = ({
@@ -17,24 +19,28 @@ const Square = ({
   file,
   className,
   children,
-  occupied,
+  occupiedBy,
   ...rest
 }: IProps) => {
   const togglePieceDrag = usePieceStore((state) => state.toggleIsPieceDragged);
   const setDraggingOver = usePieceStore((state) => state.setDraggingOver);
   const setDraggedPiece = usePieceStore((state) => state.setDraggedPiece);
+  const { move } = useChessActions();
   const [style, api] = useSpring(() => ({
     x: 0,
     y: 0,
     immediate: true,
     zIndex: 10,
   }));
+
+  const dragOffset = useRef<[number, number]>([0, 0]);
+
   const bind = useGesture({
     onDrag: ({ active, movement: [x, y], xy }) => {
-      if (!occupied) return;
+      if (!occupiedBy) return;
       api.start({
-        x: active ? x : 0,
-        y: active ? y : 0,
+        x: active ? x + dragOffset.current[0] : 0,
+        y: active ? y + dragOffset.current[1] : 0,
         zIndex: active ? 20 : 10,
         immediate: true,
       });
@@ -48,17 +54,31 @@ const Square = ({
       if (!pos) return;
       setDraggingOver(pos);
     },
-    onDragStart: () => {
+    onDragStart: ({ initial, currentTarget }) => {
       togglePieceDrag();
       setDraggedPiece({ rank, file });
+      if (currentTarget instanceof Element) {
+        const squareBounds = currentTarget.getBoundingClientRect();
+        const offset: [number, number] = [
+          initial[0] - squareBounds.x - squareBounds.width / 2,
+          initial[1] - squareBounds.y - squareBounds.height / 2,
+        ];
+        dragOffset.current = offset;
+      }
     },
     onDragEnd: ({ xy }) => {
       togglePieceDrag();
       const dropPlaceEls = document.elementsFromPoint(xy[0], xy[1]);
-      const dropPlace = [...dropPlaceEls].filter(
+      const dropPlace = dropPlaceEls.find(
         (el) => (el as HTMLElement).dataset.dropplace
-      )[0];
+      ) as HTMLElement;
       if (!dropPlace) return;
+      const placeOnBoard = dropPlace.dataset.dropplace;
+      if (!placeOnBoard) return;
+      const pos: DraggedPiece = JSON.parse(placeOnBoard);
+      const moveFromSquare = `${file}${rank}` as const;
+      const moveToSquare = `${pos.file}${pos.rank}` as const;
+      move({ from: moveFromSquare, to: moveToSquare });
     },
   });
 
@@ -77,7 +97,7 @@ const Square = ({
       "bg-chestnut-600":
         (rank + fileToValue(file)) % 2 === 0 && theme === "chestnut",
       className,
-      "cursor-grab": occupied,
+      "cursor-grab": occupiedBy,
     }
   );
 
