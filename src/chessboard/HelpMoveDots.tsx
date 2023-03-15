@@ -16,10 +16,17 @@ const HelpMoveDots = () => {
   const game = useGameStore((state) => state.game);
   const moves = game.moves({ square: draggedPieceSquare, verbose: true });
 
+  // some possible moves may lead to the same square e.g. promotion
+  // its not needed here since only one help dot is needed for each square
+  // get all unique moves based on .to value from moves array
+  const uniqueMoves = [
+    ...Array.from(new Map(moves.map((m) => [m.to, m])).values()),
+  ];
+
   if (!isPieceDragged || !moves) return null;
   return (
     <>
-      {moves.map((m) => (
+      {uniqueMoves.map((m) => (
         <MoveDot position={m.to} flags={m.flags} key={nanoid()} />
       ))}
     </>
