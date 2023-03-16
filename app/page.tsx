@@ -1,8 +1,11 @@
 import Chessboard from "@/chessboard/Chessboard";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className="flex h-[100vh] w-full items-center justify-center bg-zinc-900">
+    <div
+      className="flex w-full items-center justify-center"
+      style={{ height: "calc(100vh - 56px)" }}
+    >
       <div
         className="relative overflow-hidden rounded"
         style={{
@@ -14,6 +17,6 @@ export default function Home() {
       >
         <Chessboard />
       </div>
-    </main>
+    </div>
   );
 }
