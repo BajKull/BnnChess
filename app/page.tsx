@@ -4,7 +4,7 @@ export default async function Home() {
   return (
     <div
       className="flex w-full items-center justify-center"
-      style={{ height: "calc(100vh - 56px)" }}
+      style={{ height: "calc(100vh - 60px)" }}
     >
       <div
         className="relative overflow-hidden rounded"

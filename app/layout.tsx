@@ -17,7 +17,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="bg-zinc-900">
         <Navbar session={session} />
-        <main className="min-h-screen pt-14">{children}</main>
+        <main className="min-h-screen pt-[60px]">{children}</main>
       </body>
     </html>
   );
