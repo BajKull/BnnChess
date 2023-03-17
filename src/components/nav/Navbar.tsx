@@ -46,7 +46,7 @@ const Navbar = ({ session }: IProps) => {
                 Sign in
               </TwitchButton>
             )}
-            {showContextMenu && <UserContextMenu />}
+            {showContextMenu && <UserContextMenu user={session?.user} />}
           </li>
         </ul>
       </div>
