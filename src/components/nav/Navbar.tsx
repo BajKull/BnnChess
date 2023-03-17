@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import TwitchButton from "../button/twitch/TwitchButton";
@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { Session } from "next-auth";
 import UserAvatar from "./UserAvatar";
 import UserContextMenu from "./UserContextMenu";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 interface IProps {
   session: Session | null;
@@ -15,6 +16,9 @@ interface IProps {
 
 const Navbar = ({ session }: IProps) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
+  const contextMenuRef = useRef(null);
+
+  useOnClickOutside(contextMenuRef, () => setShowContextMenu(false));
   return (
     <nav className="absolute top-0 left-0 h-[60px] w-full rounded bg-transparent px-2 py-2.5 sm:px-4">
       <div className="container mx-auto flex h-full flex-wrap items-center justify-between">
@@ -35,18 +39,18 @@ const Navbar = ({ session }: IProps) => {
           </li>
           <li className="relative text-sm">
             {session?.user ? (
-              <UserAvatar
-                user={session?.user}
-                onClick={() => {
-                  setShowContextMenu(true);
-                }}
-              />
+              <div ref={contextMenuRef}>
+                <UserAvatar
+                  user={session?.user}
+                  onClick={() => setShowContextMenu(true)}
+                />
+                {showContextMenu && <UserContextMenu user={session?.user} />}
+              </div>
             ) : (
               <TwitchButton onClick={() => signIn("twitch")}>
                 Sign in
               </TwitchButton>
             )}
-            {showContextMenu && <UserContextMenu user={session?.user} />}
           </li>
         </ul>
       </div>
