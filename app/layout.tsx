@@ -1,5 +1,6 @@
 import Navbar from "@/components/nav/Navbar";
 import { getServerSession } from "next-auth";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
 import "./globals.scss";
 
 export const metadata = {
@@ -12,7 +13,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
     <html lang="en">
       <body className="bg-zinc-900">
