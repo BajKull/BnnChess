@@ -13,8 +13,8 @@ const useTwitchChat = (channel: string) => {
       if (!session) return;
       ws.addEventListener("open", () => {
         console.log("connection estabilished");
-        ws.send(`PASS oauth:${session.user.authToken}`);
-        ws.send(`NICK ${session.user.name}`);
+        ws.send(`PASS oauth:${session.authToken}`);
+        ws.send(`NICK ${session.user?.name}`);
         ws.send(`JOIN #${channel}`);
       });
       // ws.on("open", );
