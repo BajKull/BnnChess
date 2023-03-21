@@ -41,7 +41,7 @@ const SelectWithText = ({ options, value, setValue, ...props }: IProps) => {
         >
           <input
             value={value}
-            className="mr-auto border-0 bg-transparent outline-none"
+            className="mr-auto min-w-0 border-0 bg-transparent outline-none"
             ref={inputRef}
             onChange={(e) => setValue(e.target.value)}
           />

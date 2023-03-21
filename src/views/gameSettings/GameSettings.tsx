@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/button/Button";
 import Select from "@/components/input/select/Select";
 import SelectWithText from "@/components/input/selectWithText/SelectWithText";
 import React, { useState } from "react";
@@ -11,7 +12,8 @@ const GameSettings = () => {
   const [playerColor, setPlayerColor] = useState(PLAYER_COLORS[0]);
   const [moveTime, setMoveTime] = useState(TIME_OPTIONS[3]);
   return (
-    <div className="flex flex-col">
+    <div className="flex w-[200px] flex-col p-5 shadow">
+      <p className="mb-5 font-medium text-white">Game settings</p>
       <label className="mt-3 mb-2 text-sm font-medium text-white">
         Select player color
       </label>
@@ -28,6 +30,9 @@ const GameSettings = () => {
         value={moveTime}
         setValue={setMoveTime}
       />
+      <Button primary className="mt-5">
+        Play
+      </Button>
     </div>
   );
 };
