@@ -10,9 +10,10 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
   setValue: (v: string) => void;
 }
-const Select = ({ options, value, setValue, ...props }: IProps) => {
+const SelectWithText = ({ options, value, setValue, ...props }: IProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const selectRef = useRef(null);
+  const inputRef = useRef(null);
 
   const clsDiv = classNames(
     "relative inline-block w-full text-left",
@@ -20,6 +21,12 @@ const Select = ({ options, value, setValue, ...props }: IProps) => {
   );
 
   useOnClickOutside(selectRef, () => setIsExpanded(false));
+
+  const handleBtnClick = () => {
+    setIsExpanded((s) => !s);
+    if (!inputRef.current) return;
+    (inputRef.current as HTMLElement).focus();
+  };
 
   return (
     <div className={clsDiv} ref={selectRef} {...props}>
@@ -30,11 +37,16 @@ const Select = ({ options, value, setValue, ...props }: IProps) => {
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
-          onClick={() => setIsExpanded((s) => !s)}
+          onClick={handleBtnClick}
         >
-          {value}
+          <input
+            value={value}
+            className="mr-auto border-0 bg-transparent outline-none"
+            ref={inputRef}
+            onChange={(e) => setValue(e.target.value)}
+          />
           <svg
-            className="-mr-1 ml-auto h-5 w-5 text-white"
+            className="-mr-1 h-5 w-5 text-white"
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden="true"
@@ -77,4 +89,4 @@ const Select = ({ options, value, setValue, ...props }: IProps) => {
   );
 };
 
-export default Select;
+export default SelectWithText;
