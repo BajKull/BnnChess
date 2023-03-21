@@ -7,12 +7,15 @@ interface Move {
 }
 
 const useChessActions = () => {
-  const { game, setBoardToRender } = useGameStore();
+  const { game, setBoardToRender, setLegalMoves } = useGameStore();
 
   const move = ({ from, to }: Move) => {
     try {
       game.move({ from, to });
       setBoardToRender(game.board());
+      setLegalMoves(
+        game.moves({ verbose: true }).map((m) => ({ from: m.from, to: m.to }))
+      );
     } catch (e) {
       return;
     }

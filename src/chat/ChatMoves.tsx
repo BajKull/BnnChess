@@ -4,7 +4,7 @@ import useTwitchChat from "@/hooks/useTwitchChat";
 import React, { use } from "react";
 
 const ChatMoves = () => {
-  useTwitchChat("slayproxx");
+  // useTwitchChat("rybsonlol_");
   return <div>ChatMoves</div>;
 };
 
