@@ -10,7 +10,7 @@ export default async function Page({ params }: Params) {
   return (
     <div
       className="flex w-full items-center justify-center"
-      style={{ height: "calc(100vh - 60px)" }}
+      style={{ minHeight: "calc(100vh - 60px)" }}
     >
       <GameSettings />
       <div

@@ -18,7 +18,7 @@ const Button = ({
     className,
     {
       "bg-zinc-800 hover:bg-zinc-700 focus:bg-zinc-700": secondary,
-      "bg-indigo-800 hover:bg-indigo-700 focus:bg-indigo-700": primary,
+      "bg-purple-800 hover:bg-purple-700 focus:bg-purple-700": primary,
     }
   );
   return (

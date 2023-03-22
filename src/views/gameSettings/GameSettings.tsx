@@ -52,7 +52,10 @@ const GameSettings = () => {
   };
 
   return (
-    <div className="flex w-[200px] flex-col p-5 shadow">
+    <div
+      className="flex h-[80vmin] w-[250px] flex-col px-10 shadow"
+      style={{ minHeight: "300px" }}
+    >
       <p className="mb-5 text-xl font-semibold text-white">Game settings</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="mt-3 mb-2 block text-sm font-medium text-white">
