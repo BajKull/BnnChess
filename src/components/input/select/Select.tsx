@@ -4,19 +4,21 @@ import useOnClickOutside from "@/hooks/useOnClickOutside";
 import classNames from "classnames";
 import { nanoid } from "nanoid";
 import React, { useRef, useState } from "react";
+import { FieldError } from "react-hook-form";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   options: string[];
   value: string;
   setValue: (v: string) => void;
+  error?: FieldError | undefined;
 }
-const Select = ({ options, value, setValue, ...props }: IProps) => {
+const Select = ({ options, value, className, setValue, ...props }: IProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const selectRef = useRef(null);
 
   const clsDiv = classNames(
     "relative inline-block w-full text-left",
-    props.className
+    className
   );
 
   useOnClickOutside(selectRef, () => setIsExpanded(false));
@@ -40,9 +42,9 @@ const Select = ({ options, value, setValue, ...props }: IProps) => {
             aria-hidden="true"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             />
           </svg>
         </button>

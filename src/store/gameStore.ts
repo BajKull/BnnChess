@@ -21,6 +21,12 @@ interface GameStore {
   setBoardToRender: (b: Board) => void;
   legalMoves: Move[];
   setLegalMoves: (moves: Move[]) => void;
+  playerColor: "b" | "w";
+  setPlayerColor: (v: "b" | "w") => void;
+  moveTime: number;
+  setMoveTime: (v: number) => void;
+  isGameActive: boolean;
+  setIsGameActive: (v: boolean) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -30,4 +36,10 @@ export const useGameStore = create<GameStore>((set) => ({
   setBoardToRender: (b) => set(() => ({ boardToRender: b })),
   legalMoves: [],
   setLegalMoves: (m) => set(() => ({ legalMoves: m })),
+  playerColor: "w",
+  setPlayerColor: (v) => set(() => ({ playerColor: v })),
+  moveTime: 30,
+  setMoveTime: (v) => set(() => ({ moveTime: v })),
+  isGameActive: false,
+  setIsGameActive: (v) => set(() => ({ isGameActive: v })),
 }));

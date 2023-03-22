@@ -7,7 +7,9 @@ interface Move {
 }
 
 const useChessActions = () => {
-  const { game, setBoardToRender, setLegalMoves } = useGameStore();
+  const game = useGameStore((state) => state.game);
+  const setBoardToRender = useGameStore((state) => state.setBoardToRender);
+  const setLegalMoves = useGameStore((state) => state.setLegalMoves);
 
   const move = ({ from, to }: Move) => {
     try {
