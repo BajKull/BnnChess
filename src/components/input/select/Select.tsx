@@ -12,7 +12,14 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   setValue: (v: string) => void;
   error?: FieldError | undefined;
 }
-const Select = ({ options, value, className, setValue, ...props }: IProps) => {
+const Select = ({
+  options,
+  error,
+  value,
+  className,
+  setValue,
+  ...props
+}: IProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const selectRef = useRef(null);
 
@@ -25,7 +32,13 @@ const Select = ({ options, value, className, setValue, ...props }: IProps) => {
 
   return (
     <div className={clsDiv} ref={selectRef} {...props}>
-      <div>
+      <div
+        className={
+          error
+            ? "rounded-md border border-red-500 text-red-500"
+            : "border border-transparent"
+        }
+      >
         <button
           type="button"
           className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-zinc-800 px-3 py-2 text-sm font-semibold text-white hover:bg-zinc-700 focus:bg-zinc-700"
@@ -49,6 +62,11 @@ const Select = ({ options, value, className, setValue, ...props }: IProps) => {
           </svg>
         </button>
       </div>
+      {error && (
+        <label className="absolute left-0 mt-1 origin-top-left text-xs font-medium text-red-500">
+          {error.message}
+        </label>
+      )}
       {isExpanded && (
         <div
           className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-zinc-800 shadow-lg focus:outline-none"

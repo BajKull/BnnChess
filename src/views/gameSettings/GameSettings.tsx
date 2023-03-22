@@ -33,14 +33,7 @@ const GameSettings = () => {
     },
   });
 
-  const startGame = () => {
-    setIsGameActive(true);
-    // setMoveTime(moveTimeState);
-    // setPlayerColor(playerColorState);
-  };
-
   const onSubmit: SubmitHandler<SettingsSchema> = (data) => {
-    console.log("SUBMIT");
     const getColor = () => {
       if (data.playerColor === "Black") return "b";
       if (data.playerColor === "White") return "w";
@@ -69,6 +62,7 @@ const GameSettings = () => {
           options={[...PLAYER_COLORS]}
           value={playerColorState}
           setValue={setColor}
+          error={errors.playerColor}
         />
         <label className="mt-3 mb-2 block text-sm font-medium text-white">
           Move time (s)
@@ -82,12 +76,7 @@ const GameSettings = () => {
           error={errors.moveTime}
           {...register("moveTime")}
         />
-        <Button
-          primary
-          className="mt-5 w-full"
-          type="submit"
-          onClick={startGame}
-        >
+        <Button primary className="mt-5 w-full" type="submit">
           Play
         </Button>
       </form>

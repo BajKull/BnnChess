@@ -72,7 +72,7 @@ const SelectWithText = React.forwardRef<HTMLInputElement, IProps>(
           </button>
         </div>
         {error && (
-          <label className="absolute left-0 origin-top-left text-sm font-medium text-red-500">
+          <label className="absolute left-0 mt-1 origin-top-left text-xs font-medium text-red-500">
             {error.message}
           </label>
         )}
