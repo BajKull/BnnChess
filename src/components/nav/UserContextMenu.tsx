@@ -14,7 +14,7 @@ const UserContextMenu = React.forwardRef<HTMLDivElement, IProps>(
   (props, ref) => {
     const { user, className, ...otherProps } = props;
     const clsDiv = classNames(
-      "absolute -bottom-5 right-0 translate-y-full overflow-hidden rounded bg-zinc-800 text-white min-w-[225px] ",
+      "absolute -bottom-5 right-0 translate-y-full overflow-hidden rounded bg-zinc-800 text-white min-w-[225px] z-30",
       className
     );
 

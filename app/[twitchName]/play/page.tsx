@@ -37,7 +37,7 @@ export default async function Page({ params }: Params) {
           <Chessboard />
         </div>
       </div>
-      <div className="h-[80vmin] w-[500px] lg:static 2xl:w-[700px]">
+      <div className="h-[80vmin] min-h-[300px] w-[500px] lg:static 2xl:w-[700px]">
         <ChatPanel />
       </div>
     </div>
