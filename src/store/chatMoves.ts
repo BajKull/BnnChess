@@ -2,7 +2,7 @@ import { generateFakeMove } from "@/chessboard/utils";
 import { create } from "zustand";
 import { useGameStore } from "./gameStore";
 
-type Votes = Map<string, number>;
+type Votes = Map<string, string[]>;
 type Move = {
   from: string;
   to: string;
@@ -33,11 +33,13 @@ export const useChatStore = create<ChatStore>((set) => ({
       const fakeMove = generateFakeMove(legalMoves);
       // const moveKey = `${v.move.from} - ${v.move.to}`;
       const moveKey = `${fakeMove.from} - ${fakeMove.to}`;
+
+      const moveVoters = state.chatMoves.get(moveKey);
       return {
         usersVoted: new Set(state.usersVoted).add(v.user),
         chatMoves: new Map(state.chatMoves).set(
           moveKey,
-          (state.chatMoves.get(moveKey) || 0) + 1
+          moveVoters ? [...moveVoters, v.user] : [v.user]
         ),
       };
     }),

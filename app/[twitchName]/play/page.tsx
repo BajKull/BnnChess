@@ -24,7 +24,6 @@ export default async function Page({ params }: Params) {
       className="flex w-full items-center justify-center px-5"
       style={{ minHeight: "calc(100vh - 60px)" }}
     >
-      <div className="xl:w-[250px] 2xl:w-[350px]" />
       <div
         className="relative overflow-hidden rounded"
         style={{
@@ -38,7 +37,7 @@ export default async function Page({ params }: Params) {
           <Chessboard />
         </div>
       </div>
-      <div className="h-[80vmin] w-[250px] lg:static 2xl:w-[350px]">
+      <div className="h-[80vmin] w-[500px] lg:static 2xl:w-[700px]">
         <ChatPanel />
       </div>
     </div>
