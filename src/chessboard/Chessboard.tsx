@@ -8,35 +8,43 @@ import BoardPiece from "@/components/pieces/BoardPiece";
 import { useGameStore } from "@/store/gameStore";
 import HoverHighlight from "./HoverHighlight";
 import HelpMoveDots from "./HelpMoveDots";
-
-const PLAYER = "white";
+import { fileToValue } from "./utils";
+import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
-  const boardToRender = useGameStore((state) => state.boardToRender);
+  const gameBoard = useGameStore((state) => state.boardToRender)
+    .flat()
+    .filter(Boolean);
   const playerColor = useGameStore((state) => state.playerColor);
+
+  const renderRanks = playerColor === "w" ? [...ranks].reverse() : ranks;
+  const renderFiles = playerColor === "w" ? files : [...files].reverse();
+
+  const getSquare = (rank: ChessboardRank, file: ChessboardFile) =>
+    gameBoard.find((el) => el?.square === `${file}${rank}`);
 
   return (
     <>
       <div className="flex h-full w-full flex-col">
-        {[...ranks].reverse().map((rank, i) => (
+        {renderRanks.map((rank) => (
           <div key={nanoid()} className="flex h-[12.5%] w-full">
-            {files.map((file, j) => (
-              <div className="h-full w-[12.5%]" key={nanoid()}>
-                <Square
-                  rank={rank}
-                  file={file}
-                  occupiedBy={game.get(`${file}${rank}`)}
-                >
-                  {boardToRender[i][j] !== null && (
-                    <BoardPiece
-                      color={boardToRender[i][j]!.color}
-                      piece={boardToRender[i][j]!.type}
-                    />
-                  )}
-                </Square>
-              </div>
-            ))}
+            {renderFiles.map((file) => {
+              const square = getSquare(rank, file);
+              return (
+                <div className="h-full w-[12.5%]" key={nanoid()}>
+                  <Square
+                    rank={rank}
+                    file={file}
+                    occupiedBy={game.get(`${file}${rank}`)}
+                  >
+                    {square && (
+                      <BoardPiece color={square!.color} piece={square!.type} />
+                    )}
+                  </Square>
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

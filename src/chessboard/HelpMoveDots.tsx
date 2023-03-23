@@ -1,11 +1,10 @@
 import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
-import { ChessboardFile } from "@/types/chessboard";
+import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 import { Square } from "chess.js";
-import classNames from "classnames";
 import { nanoid } from "nanoid";
 import React from "react";
-import { fileToValue } from "./utils";
+import { positionTranslate } from "./utils";
 
 const HelpMoveDots = () => {
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
@@ -34,18 +33,18 @@ const HelpMoveDots = () => {
 };
 
 const MoveDot = ({ position, flags }: { position: Square; flags: string }) => {
+  const playerColor = useGameStore((state) => state.playerColor);
   const [file, rank] = position.split("");
 
   return (
     <svg
       viewBox="0 0 100 100"
       className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%]"
-      style={{
-        transform: `
-          translateX(${fileToValue(file as ChessboardFile) * 100 - 100}%)
-          translateY(-${(parseInt(rank) || 0) * 100 - 100}%)
-        `,
-      }}
+      style={positionTranslate({
+        rank: parseInt(rank) as ChessboardRank,
+        file: file as ChessboardFile,
+        playerColor,
+      })}
     >
       <circle
         cx="50"

@@ -1,22 +1,24 @@
+import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
 import classNames from "classnames";
 import React from "react";
-import { fileToValue } from "./utils";
+import { fileToValue, positionTranslate } from "./utils";
 
 const HoverHighlight = () => {
   const draggingOver = usePieceStore((state) => state.draggingOver);
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
+  const playerColor = useGameStore((state) => state.playerColor);
+
   if (!isPieceDragged) return null;
   return (
     <svg
       className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%]"
       viewBox="0 0 100 100"
-      style={{
-        transform: `
-          translateX(${fileToValue(draggingOver?.file) * 100 - 100}%)
-          translateY(-${(draggingOver?.rank || 0) * 100 - 100}%)
-        `,
-      }}
+      style={positionTranslate({
+        rank: draggingOver?.rank,
+        file: draggingOver?.file,
+        playerColor,
+      })}
       shapeRendering="crispEdges"
     >
       <rect

@@ -66,7 +66,7 @@ const GameSettings = () => {
       <p className="mb-5 text-xl font-semibold text-white">Game settings</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="mt-3 mb-2 block text-sm font-medium text-white">
-          Select player color
+          Player color
         </label>
         <Select
           options={[...PLAYER_COLORS]}

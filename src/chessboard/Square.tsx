@@ -7,6 +7,7 @@ import { DraggedPiece, usePieceStore } from "@/store/pieceStore";
 import { fileToValue } from "./utils";
 import { Piece } from "chess.js";
 import useChessActions from "@/hooks/useChessActions";
+import { useGameStore } from "@/store/gameStore";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   rank: ChessboardRank;
@@ -34,6 +35,7 @@ const Square = ({
   }));
 
   const dragOffset = useRef<[number, number]>([0, 0]);
+  const playerColor = useGameStore((state) => state.playerColor);
 
   const bind = useGesture({
     onDrag: ({ active, movement: [x, y], xy }) => {
@@ -127,8 +129,18 @@ const Square = ({
       onContextMenu={(e) => e.preventDefault()}
       {...rest}
     >
-      {rank === 1 && <label className={clsText("rank")}>{file}</label>}
-      {file === "a" && <label className={clsText("file")}>{rank}</label>}
+      {playerColor === "w" && rank === 1 && (
+        <label className={clsText("rank")}>{file}</label>
+      )}
+      {playerColor === "b" && rank === 8 && (
+        <label className={clsText("rank")}>{file}</label>
+      )}
+      {playerColor === "w" && file === "a" && (
+        <label className={clsText("file")}>{rank}</label>
+      )}
+      {playerColor === "b" && file === "h" && (
+        <label className={clsText("file")}>{rank}</label>
+      )}
       {children && (
         <a.div
           {...bind()}
