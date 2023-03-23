@@ -14,6 +14,7 @@ const PLAYER = "white";
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
   const boardToRender = useGameStore((state) => state.boardToRender);
+  const playerColor = useGameStore((state) => state.playerColor);
 
   return (
     <>

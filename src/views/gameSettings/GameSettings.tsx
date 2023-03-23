@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useChatStore } from "@/store/chatMoves";
 
 const PLAYER_COLORS = ["Random", "White", "Black"] as const;
 type PlayerColor = (typeof PLAYER_COLORS)[number];
@@ -21,6 +22,7 @@ const GameSettings = () => {
   const setMoveTime = useGameStore((state) => state.setMoveTime);
   const setPlayerColor = useGameStore((state) => state.setPlayerColor);
   const restartGame = useGameStore((state) => state.restartGame);
+  const setIsChatTurn = useChatStore((state) => state.setIsChatTurn);
   const {
     register,
     handleSubmit,
@@ -41,9 +43,12 @@ const GameSettings = () => {
       return Math.random() < 0.5 ? "w" : "b";
     };
 
+    const color = getColor();
+
+    if (color === "b") setIsChatTurn(true);
     setGameState("game");
     setMoveTime(data.moveTime);
-    setPlayerColor(getColor());
+    setPlayerColor(color);
     restartGame();
   };
 

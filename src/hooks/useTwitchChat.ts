@@ -1,12 +1,14 @@
 "use client";
 
+import Square from "@/chessboard/Square";
+import { useChatStore } from "@/store/chatMoves";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const useTwitchChat = (channel: string) => {
+  const addUserVote = useChatStore((state) => state.addUserVote);
   useEffect(() => {
     const ws = new WebSocket("ws://irc-ws.chat.twitch.tv:80");
-
     const getAsyncSession = async () => {
       const session = await getSession();
       if (!session) return;
@@ -20,7 +22,11 @@ const useTwitchChat = (channel: string) => {
       ws.addEventListener("message", (data) => {
         const message = parseChatMessage(data.data);
         if (!message) return;
-        console.log(message);
+
+        const [from, to] = message.content.split("-");
+        if (!to || !from) return;
+        const vote = { user: message.username, move: { from, to } };
+        addUserVote(vote);
       });
     };
 
@@ -29,7 +35,7 @@ const useTwitchChat = (channel: string) => {
     return () => {
       ws.close();
     };
-  }, [channel]);
+  }, [addUserVote, channel]);
 };
 
 const parseChatMessage = (msg: string) => {
