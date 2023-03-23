@@ -1,4 +1,6 @@
 import { generateFakeMove } from "@/chessboard/utils";
+import { Square } from "chess.js";
+import { createRef } from "react";
 import { create } from "zustand";
 import { useGameStore } from "./gameStore";
 
@@ -9,19 +11,23 @@ type Move = {
 };
 
 interface ChatStore {
-  chatMoves: Votes;
+  chatMoves: { map: Votes; render: { move: string; votes: string[] }[] };
   isChatTurn: boolean;
   setIsChatTurn: (v: boolean) => void;
+  toggleIsChatTurn: () => void;
+  chatMoveRef: React.MutableRefObject<{ from: Square; to: Square } | null>;
   usersVoted: Set<string>;
   addUserVote: ({ user, move }: { user: string; move: Move }) => void;
-  resetUsersVoted: () => void;
+  resetChatMoves: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
-  chatMoves: new Map(),
+  chatMoves: { map: new Map(), render: [] },
   isChatTurn: false,
   setIsChatTurn: (v) => set(() => ({ isChatTurn: v })),
+  toggleIsChatTurn: () => set((state) => ({ isChatTurn: !state.isChatTurn })),
   usersVoted: new Set(),
+  chatMoveRef: createRef(),
   addUserVote: (v) =>
     set((state) => {
       if (!state.isChatTurn) return state;
@@ -34,14 +40,34 @@ export const useChatStore = create<ChatStore>((set) => ({
       // const moveKey = `${v.move.from} - ${v.move.to}`;
       const moveKey = `${fakeMove.from} - ${fakeMove.to}`;
 
-      const moveVoters = state.chatMoves.get(moveKey);
+      const moveVoters = state.chatMoves.map.get(moveKey);
+
+      const chatMoves = new Map(state.chatMoves.map).set(
+        moveKey,
+        moveVoters ? [...moveVoters, v.user] : [v.user]
+      );
+
+      const movesToRender = Array.from(chatMoves.keys())
+        .map((key) => ({
+          move: key,
+          votes: chatMoves.get(key) || [],
+        }))
+        .sort((a, b) => b.votes.length - a.votes.length);
+
+      const [from, to] = movesToRender[0].move.split(" - ") as [Square, Square];
+      state.chatMoveRef.current = { from, to };
+
       return {
         usersVoted: new Set(state.usersVoted).add(v.user),
-        chatMoves: new Map(state.chatMoves).set(
-          moveKey,
-          moveVoters ? [...moveVoters, v.user] : [v.user]
-        ),
+        chatMoves: { map: chatMoves, render: movesToRender },
       };
     }),
-  resetUsersVoted: () => set(() => ({ usersVoted: new Set() })),
+  resetChatMoves: () =>
+    set((state) => {
+      state.chatMoveRef.current = null;
+      return {
+        usersVoted: new Set(),
+        chatMoves: { map: new Map(), render: [] },
+      };
+    }),
 }));

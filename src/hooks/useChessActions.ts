@@ -1,3 +1,4 @@
+import { useChatStore } from "@/store/chatMoves";
 import { useGameStore } from "@/store/gameStore";
 import { Square } from "chess.js";
 
@@ -10,6 +11,7 @@ const useChessActions = () => {
   const game = useGameStore((state) => state.game);
   const setBoardToRender = useGameStore((state) => state.setBoardToRender);
   const setLegalMoves = useGameStore((state) => state.setLegalMoves);
+  const toggleIsChatTurn = useChatStore((state) => state.toggleIsChatTurn);
 
   const move = ({ from, to }: Move) => {
     try {
@@ -18,6 +20,7 @@ const useChessActions = () => {
       setLegalMoves(
         game.moves({ verbose: true }).map((m) => ({ from: m.from, to: m.to }))
       );
+      toggleIsChatTurn();
     } catch (e) {
       return;
     }

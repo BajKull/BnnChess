@@ -7,9 +7,9 @@ import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const ChatMoves = () => {
-  const chatMoves = useChatStore((state) => state.chatMoves);
+  const chatMoves = useChatStore((state) => state.chatMoves).render;
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  useTwitchChat("loltyler1");
+  useTwitchChat("h2p_gucio");
 
   const [movesListRef] = useAutoAnimate();
 
@@ -24,13 +24,6 @@ const ChatMoves = () => {
       "bg-zinc-900": i !== 0,
       "bg-purple-900": i === 0,
     });
-
-  const movesToRender = Array.from(chatMoves.keys())
-    .map((key) => ({
-      move: key,
-      votes: chatMoves.get(key) || [],
-    }))
-    .sort((a, b) => b.votes.length - a.votes.length);
 
   return (
     <div className="h-full">
@@ -54,7 +47,7 @@ const ChatMoves = () => {
         style={{ maxHeight: "calc(100% - 44px)" }}
       >
         <ul className="space-y-2" ref={movesListRef}>
-          {movesToRender.map((move, i) => (
+          {chatMoves.map((move, i) => (
             <li key={`chat-move-${move.move}`} className={clsDiv(i)}>
               <div className="flex">
                 <p className="mr-auto font-semibold">{move.move}</p>
