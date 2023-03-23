@@ -49,13 +49,16 @@ const ChatMoves = () => {
           </svg>
         </span>
       </p>
-      <div className="custom-scroll h-full max-h-full overflow-y-scroll px-5 lg:px-10">
+      <div
+        className="custom-scroll h-full overflow-y-scroll px-5 lg:px-10"
+        style={{ maxHeight: "calc(100% - 44px)" }}
+      >
         <ul className="space-y-2" ref={movesListRef}>
           {movesToRender.map((move, i) => (
             <li key={`chat-move-${move.move}`} className={clsDiv(i)}>
               <div className="flex">
                 <p className="mr-auto font-semibold">{move.move}</p>
-                <p>{move.votes.length}</p>
+                <p className="text-sm font-medium">{move.votes.length}</p>
               </div>
               <div className="mt-1 flex w-full flex-wrap">
                 {move.votes.map((user) => (
