@@ -4,7 +4,7 @@ import Button from "@/components/button/Button";
 import Select from "@/components/input/select/Select";
 import SelectWithText from "@/components/input/selectWithText/SelectWithText";
 import { useGameStore } from "@/store/gameStore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,9 +17,10 @@ const GameSettings = () => {
   const [playerColorState, setPlayerColorState] = useState<PlayerColor>(
     PLAYER_COLORS[0]
   );
-  const setIsGameActive = useGameStore((state) => state.setIsGameActive);
+  const setGameState = useGameStore((state) => state.setGameState);
   const setMoveTime = useGameStore((state) => state.setMoveTime);
   const setPlayerColor = useGameStore((state) => state.setPlayerColor);
+  const restartGame = useGameStore((state) => state.restartGame);
   const {
     register,
     handleSubmit,
@@ -40,9 +41,10 @@ const GameSettings = () => {
       return Math.random() < 0.5 ? "w" : "b";
     };
 
-    setIsGameActive(true);
+    setGameState("game");
     setMoveTime(data.moveTime);
     setPlayerColor(getColor());
+    restartGame();
   };
 
   const setColor = (v: string) => {
@@ -53,7 +55,7 @@ const GameSettings = () => {
 
   return (
     <div
-      className="flex h-[80vmin] w-[250px] flex-col px-10 shadow"
+      className="flex h-full w-full flex-col px-10"
       style={{ minHeight: "300px" }}
     >
       <p className="mb-5 text-xl font-semibold text-white">Game settings</p>
@@ -79,7 +81,7 @@ const GameSettings = () => {
           error={errors.moveTime}
           {...register("moveTime")}
         />
-        <Button primary className="mt-5 w-full" type="submit">
+        <Button primary className="mt-auto w-full" type="submit">
           Play
         </Button>
       </form>

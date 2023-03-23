@@ -8,6 +8,8 @@ export type Move = {
   to: Square;
 };
 
+export type GameState = "settings" | "game" | "results";
+
 type Board = ({
   square: Square;
   type: PieceSymbol;
@@ -17,6 +19,7 @@ type Board = ({
 interface GameStore {
   game: Chess;
   setGame: (g: Chess) => void;
+  restartGame: () => void;
   boardToRender: Board;
   setBoardToRender: (b: Board) => void;
   legalMoves: Move[];
@@ -25,13 +28,14 @@ interface GameStore {
   setPlayerColor: (v: "b" | "w") => void;
   moveTime: number;
   setMoveTime: (v: number) => void;
-  isGameActive: boolean;
-  setIsGameActive: (v: boolean) => void;
+  gameState: GameState;
+  setGameState: (v: GameState) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
   game: initGame,
   setGame: (g) => set(() => ({ game: g })),
+  restartGame: () => set(() => ({ game: new Chess() })),
   boardToRender: initGame.board(),
   setBoardToRender: (b) => set(() => ({ boardToRender: b })),
   legalMoves: [],
@@ -40,6 +44,6 @@ export const useGameStore = create<GameStore>((set) => ({
   setPlayerColor: (v) => set(() => ({ playerColor: v })),
   moveTime: 30,
   setMoveTime: (v) => set(() => ({ moveTime: v })),
-  isGameActive: false,
-  setIsGameActive: (v) => set(() => ({ isGameActive: v })),
+  gameState: "settings",
+  setGameState: (v) => set(() => ({ gameState: v })),
 }));

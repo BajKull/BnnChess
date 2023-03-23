@@ -9,7 +9,6 @@ const useTwitchChat = (channel: string) => {
 
     const getAsyncSession = async () => {
       const session = await getSession();
-      console.log(session);
       if (!session) return;
       ws.addEventListener("open", () => {
         console.log("connection estabilished");
@@ -19,8 +18,8 @@ const useTwitchChat = (channel: string) => {
       });
 
       ws.addEventListener("message", (data) => {
-        // console.log("MSG", data);
         const message = parseChatMessage(data.data);
+        if (!message) return;
         console.log(message);
       });
     };
