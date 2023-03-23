@@ -35,7 +35,11 @@ interface GameStore {
 export const useGameStore = create<GameStore>((set) => ({
   game: initGame,
   setGame: (g) => set(() => ({ game: g })),
-  restartGame: () => set(() => ({ game: new Chess() })),
+  restartGame: () =>
+    set(() => {
+      const newGame = new Chess();
+      return { game: newGame, legalMoves: newGame.moves({ verbose: true }) };
+    }),
   boardToRender: initGame.board(),
   setBoardToRender: (b) => set(() => ({ boardToRender: b })),
   legalMoves: [],

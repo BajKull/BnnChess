@@ -1,4 +1,4 @@
-import { Square } from "chess.js";
+import { generateFakeMove } from "@/chessboard/utils";
 import { create } from "zustand";
 import { useGameStore } from "./gameStore";
 
@@ -26,12 +26,13 @@ export const useChatStore = create<ChatStore>((set) => ({
     set((state) => {
       if (!state.isChatTurn) return state;
       const legalMoves = useGameStore.getState().legalMoves;
-
-      if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to))
-        return state;
+      // if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to))
+      //   return state;
       if (state.usersVoted.has(v.user)) return state;
 
-      const moveKey = `${v.move.from} - ${v.move.to}`;
+      const fakeMove = generateFakeMove(legalMoves);
+      // const moveKey = `${v.move.from} - ${v.move.to}`;
+      const moveKey = `${fakeMove.from} - ${fakeMove.to}`;
       return {
         usersVoted: new Set(state.usersVoted).add(v.user),
         chatMoves: new Map(state.chatMoves).set(

@@ -8,6 +8,7 @@ import { fileToValue } from "./utils";
 import { Piece } from "chess.js";
 import useChessActions from "@/hooks/useChessActions";
 import { useGameStore } from "@/store/gameStore";
+import { useChatStore } from "@/store/chatMoves";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   rank: ChessboardRank;
@@ -36,6 +37,7 @@ const Square = ({
 
   const dragOffset = useRef<[number, number]>([0, 0]);
   const playerColor = useGameStore((state) => state.playerColor);
+  const isChatTurn = useChatStore((state) => state.isChatTurn);
 
   const bind = useGesture({
     onDrag: ({ active, movement: [x, y], xy }) => {
@@ -80,6 +82,7 @@ const Square = ({
       const pos: DraggedPiece = JSON.parse(placeOnBoard);
       const moveFromSquare = `${file}${rank}` as const;
       const moveToSquare = `${pos.file}${pos.rank}` as const;
+      if (isChatTurn) return;
       move({ from: moveFromSquare, to: moveToSquare });
     },
   });

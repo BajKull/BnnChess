@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@formkit/auto-animate': 1.0.0-beta.6
   '@hookform/resolvers': ^3.0.0
   '@react-spring/web': ^9.7.1
   '@types/node': 18.14.6
@@ -31,6 +32,7 @@ specifiers:
   zustand: ^4.3.6
 
 dependencies:
+  '@formkit/auto-animate': 1.0.0-beta.6
   '@hookform/resolvers': 3.0.0_react-hook-form@7.43.7
   '@react-spring/web': 9.7.1_biqbaboplfbrettd7655fr4n2y
   '@types/node': 18.14.6
@@ -101,6 +103,10 @@ packages:
     resolution: {integrity: sha512-lK9cZUrHSJLMVAdCvDqs6Ug8gr0wmqksYiaoj/bxj2gweRQkSuhg2/V6Jswz2KiQ0RAULbqw1oQDJIMpQ5GfGA==}
     dependencies:
       '@floating-ui/core': 1.2.4
+    dev: false
+
+  /@formkit/auto-animate/1.0.0-beta.6:
+    resolution: {integrity: sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w==}
     dev: false
 
   /@hookform/resolvers/3.0.0_react-hook-form@7.43.7:

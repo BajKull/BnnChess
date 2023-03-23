@@ -35,4 +35,12 @@ export const positionTranslate = ({
   };
 };
 
-const a = [1, 2, 3, 4, 5, 6, 7, 8];
+type Move = {
+  from: string;
+  to: string;
+};
+
+export const generateFakeMove = (legalMoves: Move[]) => {
+  const randomMove = Math.floor(Math.random() * legalMoves.length);
+  return { from: legalMoves[randomMove].from, to: legalMoves[randomMove].to };
+};
