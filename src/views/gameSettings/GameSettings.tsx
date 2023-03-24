@@ -46,6 +46,7 @@ const GameSettings = () => {
     const color = getColor();
 
     if (color === "b") setIsChatTurn(true);
+    else setIsChatTurn(false);
     setGameState("game");
     setMoveTime(data.moveTime);
     setPlayerColor(color);

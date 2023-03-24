@@ -9,7 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 const ChatMoves = () => {
   const chatMoves = useChatStore((state) => state.chatMoves).render;
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  useTwitchChat("rybsonlol_");
+  useTwitchChat("bajkull");
 
   const [movesListRef] = useAutoAnimate();
 
@@ -47,6 +47,11 @@ const ChatMoves = () => {
         style={{ maxHeight: "calc(100% - 44px)" }}
       >
         <ul className="space-y-2" ref={movesListRef}>
+          {chatMoves.length === 0 && (
+            <li className={clsDiv(5)}>
+              <span className="animate-pulse">Waiting for moves...</span>
+            </li>
+          )}
           {chatMoves.map((move, i) => (
             <li key={`chat-move-${move.move}`} className={clsDiv(i)}>
               <div className="flex">

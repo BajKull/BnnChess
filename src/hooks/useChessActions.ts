@@ -15,6 +15,7 @@ const useChessActions = () => {
   const setLastMove = useGameStore((state) => state.setLastMove);
 
   const move = ({ from, to }: Move) => {
+    console.log("???");
     try {
       game.move({ from, to });
       setBoardToRender(game.board());
@@ -22,7 +23,7 @@ const useChessActions = () => {
         game.moves({ verbose: true }).map((m) => ({ from: m.from, to: m.to }))
       );
       toggleIsChatTurn();
-      setLastMove({from, to})
+      setLastMove({ from, to });
     } catch (e) {
       return;
     }

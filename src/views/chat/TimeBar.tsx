@@ -10,6 +10,7 @@ import { useChatStore } from "@/store/chatMoves";
 const TimeBar = () => {
   const moveTime = useGameStore((state) => state.moveTime);
   const isChatTurn = useChatStore((state) => state.isChatTurn);
+  const timerTrigger = useChatStore((state) => state.timerTrigger);
 
   const clsDiv = classNames(
     cls.timeBar,
@@ -19,7 +20,11 @@ const TimeBar = () => {
   if (!isChatTurn) return null;
   if (typeof document === "undefined") return null;
   return ReactDOM.createPortal(
-    <div className={clsDiv} style={{ animationDuration: `${moveTime}s` }} />,
+    <div
+      className={clsDiv}
+      style={{ animationDuration: `${moveTime}s` }}
+      key={timerTrigger}
+    />,
     document.body
   );
 };

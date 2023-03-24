@@ -7,7 +7,6 @@ import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 const LastMoveHighlight = () => {
   const lastMove = useGameStore((state) => state.lastMove);
   const playerColor = useGameStore((state) => state.playerColor);
-  console.log(lastMove);
   if (!lastMove) return null;
 
   const [fromFile, fromRank] = lastMove.from.split("");

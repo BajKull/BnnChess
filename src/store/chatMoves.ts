@@ -1,5 +1,6 @@
 import { generateFakeMove } from "@/views/chessboard/utils";
 import { Square } from "chess.js";
+import { nanoid } from "nanoid";
 import { createRef } from "react";
 import { create } from "zustand";
 import { useGameStore } from "./gameStore";
@@ -19,6 +20,8 @@ interface ChatStore {
   usersVoted: Set<string>;
   addUserVote: ({ user, move }: { user: string; move: Move }) => void;
   resetChatMoves: () => void;
+  timerTrigger: string;
+  resetTimerTrigger: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -70,4 +73,6 @@ export const useChatStore = create<ChatStore>((set) => ({
         chatMoves: { map: new Map(), render: [] },
       };
     }),
+  timerTrigger: nanoid(),
+  resetTimerTrigger: () => set(() => ({ timerTrigger: nanoid() })),
 }));

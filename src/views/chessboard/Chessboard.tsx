@@ -10,6 +10,7 @@ import HoverHighlight from "./HoverHighlight";
 import HelpMoveDots from "./HelpMoveDots";
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 import LastMoveHighlight from "./LastMoveHighlight";
+import classNames from "classnames";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -17,6 +18,7 @@ const Chessboard = () => {
     .flat()
     .filter(Boolean);
   const playerColor = useGameStore((state) => state.playerColor);
+  const gameState = useGameStore((state) => state.gameState);
 
   const renderRanks = playerColor === "w" ? [...ranks].reverse() : ranks;
   const renderFiles = playerColor === "w" ? files : [...files].reverse();
@@ -24,9 +26,13 @@ const Chessboard = () => {
   const getSquare = (rank: ChessboardRank, file: ChessboardFile) =>
     gameBoard.find((el) => el?.square === `${file}${rank}`);
 
+  const clsDiv = classNames("flex h-full w-full flex-col", {
+    "pointer-events-none select-none": gameState !== "game",
+  });
+
   return (
     <>
-      <div className="flex h-full w-full flex-col">
+      <div className={clsDiv}>
         {renderRanks.map((rank) => (
           <div key={nanoid()} className="flex h-[12.5%] w-full">
             {renderFiles.map((file) => {

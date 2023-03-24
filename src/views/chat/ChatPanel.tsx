@@ -4,6 +4,7 @@ import useChessActions from "@/hooks/useChessActions";
 import { useChatStore } from "@/store/chatMoves";
 import { useGameStore } from "@/store/gameStore";
 import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 import GameSettings from "../gameSettings/GameSettings";
 import ChatMoves from "./ChatMoves";
 import TimeBar from "./TimeBar";
@@ -13,17 +14,29 @@ const ChatPanel = () => {
   const moveTime = useGameStore((state) => state.moveTime);
   const isChatTurn = useChatStore((state) => state.isChatTurn);
   const chatMoveRef = useChatStore((state) => state.chatMoveRef);
+  const resetTimerTrigger = useChatStore((state) => state.resetTimerTrigger);
 
   const { move } = useChessActions();
 
   useEffect(() => {
     if (!isChatTurn) return;
 
-    setTimeout(() => {
-      if (!chatMoveRef.current) return;
-      move(chatMoveRef.current);
-    }, moveTime * 1000);
-  }, [chatMoveRef, isChatTurn, move, moveTime]);
+    const waitForMove = () => {
+      setTimeout(() => {
+        if (!chatMoveRef.current) {
+          waitForMove();
+          toast.error("No legal moves were made in chat. Vote again.", {
+            autoClose: 4000,
+          });
+          resetTimerTrigger();
+          return;
+        }
+        move(chatMoveRef.current);
+      }, moveTime * 1000);
+    };
+
+    waitForMove();
+  }, [chatMoveRef, isChatTurn, move, moveTime, resetTimerTrigger]);
 
   return (
     <>

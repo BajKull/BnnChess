@@ -1,4 +1,5 @@
 import Navbar from "@/components/nav/Navbar";
+import ToastWrapper from "@/views/toastWrapper/ToastWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import "./globals.scss";
@@ -18,6 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="bg-zinc-900">
         <Navbar session={session} />
+        <ToastWrapper />
         <main className="min-h-screen pt-[60px]">{children}</main>
       </body>
     </html>
