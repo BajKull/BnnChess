@@ -1,6 +1,6 @@
 import { authOptions } from "@/../pages/api/auth/[...nextauth]";
 import ChatMoves from "@/views/chat/ChatMoves";
-import Chessboard from "@/chessboard/Chessboard";
+import Chessboard from "@/views/chessboard/Chessboard";
 import { ROUTES } from "@/constants/routes";
 import { useGameStore } from "@/store/gameStore";
 import GameSettings from "@/views/gameSettings/GameSettings";

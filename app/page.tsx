@@ -1,4 +1,4 @@
-import Chessboard from "@/chessboard/Chessboard";
+import Chessboard from "@/views/chessboard/Chessboard";
 
 export default async function Home() {
   return (

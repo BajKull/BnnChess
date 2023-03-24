@@ -1,4 +1,4 @@
-import { generateFakeMove } from "@/chessboard/utils";
+import { generateFakeMove } from "@/views/chessboard/utils";
 import { Square } from "chess.js";
 import { createRef } from "react";
 import { create } from "zustand";

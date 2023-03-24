@@ -1,6 +1,6 @@
 "use client";
 
-import Square from "@/chessboard/Square";
+import Square from "@/views/chessboard/Square";
 import { useChatStore } from "@/store/chatMoves";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
