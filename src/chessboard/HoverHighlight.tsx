@@ -1,8 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
-import classNames from "classnames";
 import React from "react";
-import { fileToValue, positionTranslate } from "./utils";
+import { positionTranslate } from "./utils";
 
 const HoverHighlight = () => {
   const draggingOver = usePieceStore((state) => state.draggingOver);

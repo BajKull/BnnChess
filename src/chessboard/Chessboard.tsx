@@ -8,7 +8,6 @@ import BoardPiece from "@/components/pieces/BoardPiece";
 import { useGameStore } from "@/store/gameStore";
 import HoverHighlight from "./HoverHighlight";
 import HelpMoveDots from "./HelpMoveDots";
-import { fileToValue } from "./utils";
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 import LastMoveHighlight from "./LastMoveHighlight";
 
