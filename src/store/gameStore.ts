@@ -40,7 +40,12 @@ export const useGameStore = create<GameStore>((set) => ({
   restartGame: () =>
     set(() => {
       const newGame = new Chess();
-      return { game: newGame, legalMoves: newGame.moves({ verbose: true }) };
+      return {
+        game: newGame,
+        legalMoves: newGame.moves({ verbose: true }),
+        boardToRender: newGame.board(),
+        lastMove: undefined,
+      };
     }),
   boardToRender: initGame.board(),
   setBoardToRender: (b) => set(() => ({ boardToRender: b })),
@@ -53,5 +58,5 @@ export const useGameStore = create<GameStore>((set) => ({
   gameState: "settings",
   setGameState: (v) => set(() => ({ gameState: v })),
   lastMove: undefined,
-  setLastMove: (v) => set(() => ({lastMove: v}))
+  setLastMove: (v) => set(() => ({ lastMove: v })),
 }));
