@@ -12,5 +12,7 @@ declare module "next-auth/jwt" {
     image: string;
     email: string;
     authToken: string;
+    expires: number;
+    refreshToken: string;
   }
 }

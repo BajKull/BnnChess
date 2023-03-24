@@ -9,7 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 const ChatMoves = () => {
   const chatMoves = useChatStore((state) => state.chatMoves).render;
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  useTwitchChat("h2p_gucio");
+  useTwitchChat("rybsonlol_");
 
   const [movesListRef] = useAutoAnimate();
 
