@@ -30,6 +30,8 @@ interface GameStore {
   setMoveTime: (v: number) => void;
   gameState: GameState;
   setGameState: (v: GameState) => void;
+  lastMove?: Move;
+  setLastMove: (v?: Move) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -50,4 +52,6 @@ export const useGameStore = create<GameStore>((set) => ({
   setMoveTime: (v) => set(() => ({ moveTime: v })),
   gameState: "settings",
   setGameState: (v) => set(() => ({ gameState: v })),
+  lastMove: undefined,
+  setLastMove: (v) => set(() => ({lastMove: v}))
 }));

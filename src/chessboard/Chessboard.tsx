@@ -10,6 +10,7 @@ import HoverHighlight from "./HoverHighlight";
 import HelpMoveDots from "./HelpMoveDots";
 import { fileToValue } from "./utils";
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
+import LastMoveHighlight from "./LastMoveHighlight";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -50,6 +51,7 @@ const Chessboard = () => {
       </div>
       <HoverHighlight />
       <HelpMoveDots />
+      <LastMoveHighlight />
     </>
   );
 };
