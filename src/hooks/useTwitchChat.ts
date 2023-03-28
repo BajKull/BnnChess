@@ -1,25 +1,27 @@
 "use client";
 
-import Square from "@/views/chessboard/Square";
 import { useChatStore } from "@/store/chatMoves";
-import { getSession } from "next-auth/react";
+import { useSessionStore } from "@/store/sessionStore";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const useTwitchChat = (channel: string) => {
   const addUserVote = useChatStore((state) => state.addUserVote);
+  const session = useSessionStore((state) => state.session);
   useEffect(() => {
     const ws = new WebSocket("ws://irc-ws.chat.twitch.tv:80");
     const getAsyncSession = async () => {
-      const session = await getSession();
-      if (!session) return;
+      console.log(session);
+      if (!session) return toast.error("Couldn't connect to the chat");
       ws.addEventListener("open", () => {
-        console.log("connection estabilished");
+        toast.info("Connected to the chat");
         ws.send(`PASS oauth:${session.authToken}`);
         ws.send(`NICK ${session.user?.name}`);
         ws.send(`JOIN #${channel}`);
       });
 
       ws.addEventListener("message", (data) => {
+        console.log(data);
         const message = parseChatMessage(data.data);
         if (!message) return;
 
@@ -35,7 +37,7 @@ const useTwitchChat = (channel: string) => {
     return () => {
       ws.close();
     };
-  }, [addUserVote, channel]);
+  }, [addUserVote, channel, session]);
 };
 
 const parseChatMessage = (msg: string) => {

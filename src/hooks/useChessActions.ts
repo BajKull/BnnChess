@@ -15,7 +15,6 @@ const useChessActions = () => {
   const setLastMove = useGameStore((state) => state.setLastMove);
 
   const move = ({ from, to }: Move) => {
-    console.log("???");
     try {
       game.move({ from, to });
       setBoardToRender(game.board());

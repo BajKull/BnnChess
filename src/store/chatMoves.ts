@@ -35,6 +35,7 @@ export const useChatStore = create<ChatStore>((set) => ({
     set((state) => {
       if (!state.isChatTurn) return state;
       const legalMoves = useGameStore.getState().legalMoves;
+
       // if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to))
       //   return state;
       if (state.usersVoted.has(v.user)) return state;

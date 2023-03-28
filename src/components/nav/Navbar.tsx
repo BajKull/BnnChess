@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import TwitchButton from "../button/twitch/TwitchButton";
@@ -9,14 +9,20 @@ import { Session } from "next-auth";
 import UserAvatar from "./UserAvatar";
 import UserContextMenu from "./UserContextMenu";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
+import { useSessionStore } from "@/store/sessionStore";
 
 interface IProps {
   session: Session | null;
 }
 
 const Navbar = ({ session }: IProps) => {
+  const { setSession } = useSessionStore();
   const [showContextMenu, setShowContextMenu] = useState(false);
   const contextMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (session) setSession(session);
+  }, [session, setSession]);
 
   useOnClickOutside(contextMenuRef, () => setShowContextMenu(false));
   return (

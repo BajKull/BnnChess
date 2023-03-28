@@ -21,8 +21,11 @@ const ChatPanel = () => {
   useEffect(() => {
     if (!isChatTurn) return;
 
+    console.log("useeffect");
+
     const waitForMove = () => {
       setTimeout(() => {
+        console.log("timeout");
         if (!chatMoveRef.current) {
           waitForMove();
           toast.error("No legal moves were made in chat. Vote again.", {
