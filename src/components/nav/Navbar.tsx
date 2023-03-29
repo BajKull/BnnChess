@@ -6,10 +6,10 @@ import { ROUTES } from "@/constants/routes";
 import TwitchButton from "../button/twitch/TwitchButton";
 import { signIn } from "next-auth/react";
 import { Session } from "next-auth";
-import UserAvatar from "./UserAvatar";
 import UserContextMenu from "./UserContextMenu";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import { useSessionStore } from "@/store/sessionStore";
+import NavbarAvatar from "./NavbarAvatar";
 
 interface IProps {
   session: Session | null;
@@ -46,7 +46,7 @@ const Navbar = ({ session }: IProps) => {
           <li className="relative text-sm">
             {session?.user ? (
               <div ref={contextMenuRef}>
-                <UserAvatar
+                <NavbarAvatar
                   user={session?.user}
                   onClick={() => setShowContextMenu(true)}
                 />

@@ -7,6 +7,7 @@ import GameSettings from "@/views/gameSettings/GameSettings";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import ChatPanel from "@/views/chat/ChatPanel";
+import PlayerAvatar from "@/views/gameSettings/PlayerAvatar";
 
 interface Params {
   params: { twitchName: string };
@@ -25,19 +26,21 @@ export default async function Page({ params }: Params) {
       style={{ minHeight: "calc(100vh - 60px)" }}
     >
       <div
-        className="relative overflow-hidden rounded"
+        className="relative"
         style={{
-          width: "min(80vmin, 100%)",
+          width: "min(75vmin, 100%)",
           minHeight: "300px",
           minWidth: "300px",
         }}
       >
+        <PlayerAvatar position="top" />
         <div className="mt-[100%] h-0 w-full" />
-        <div className="absolute top-0 left-0 h-full w-full">
+        <div className="absolute top-0 left-0 h-full w-full overflow-hidden rounded">
           <Chessboard />
         </div>
+        <PlayerAvatar position="bottom" />
       </div>
-      <div className="h-[80vmin] min-h-[300px] w-[500px] lg:static 2xl:w-[700px]">
+      <div className="h-[75vmin] min-h-[300px] w-[500px] lg:static 2xl:w-[700px]">
         <ChatPanel />
       </div>
     </div>

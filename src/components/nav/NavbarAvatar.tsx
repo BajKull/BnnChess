@@ -7,7 +7,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   user: DefaultSession["user"];
 }
 
-const UserAvatar = ({ user, className, ...props }: IProps) => {
+const NavbarAvatar = ({ user, className, ...props }: IProps) => {
   const clsBtn = classNames(
     "block h-9 w-9 overflow-hidden rounded-full border-0 bg-transparent",
     className
@@ -26,4 +26,4 @@ const UserAvatar = ({ user, className, ...props }: IProps) => {
   );
 };
 
-export default UserAvatar;
+export default NavbarAvatar;

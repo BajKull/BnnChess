@@ -81,6 +81,7 @@ const GameSettings = () => {
         <SelectWithText
           className="pb-10"
           options={TIME_OPTIONS}
+          defaultValue={30}
           setValue={(v: string) =>
             setValue("moveTime", parseInt(v), { shouldValidate: true })
           }
