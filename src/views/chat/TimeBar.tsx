@@ -5,7 +5,7 @@ import classNames from "classnames";
 import React from "react";
 import cls from "./timeBar.module.scss";
 import ReactDOM from "react-dom";
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 
 const TimeBar = () => {
   const moveTime = useGameStore((state) => state.moveTime);

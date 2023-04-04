@@ -1,7 +1,7 @@
 "use client";
 
 import useChessActions from "@/hooks/useChessActions";
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 import { useGameStore } from "@/store/gameStore";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -21,11 +21,8 @@ const ChatPanel = () => {
   useEffect(() => {
     if (!isChatTurn) return;
 
-    console.log("useeffect");
-
     const waitForMove = () => {
       setTimeout(() => {
-        console.log("timeout");
         if (!chatMoveRef.current) {
           waitForMove();
           toast.error("No legal moves were made in chat. Vote again.", {

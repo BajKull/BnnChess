@@ -1,0 +1,13 @@
+.black {
+  svg {
+    @apply h-full w-auto fill-zinc-900 stroke-white;
+    stroke-width: 0.5px;
+  }
+}
+
+.white {
+  svg {
+    @apply h-full w-auto fill-white stroke-zinc-900;
+    stroke-width: 0.5px;
+  }
+}

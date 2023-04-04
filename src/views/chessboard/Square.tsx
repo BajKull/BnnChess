@@ -8,7 +8,7 @@ import { fileToValue } from "./utils";
 import { Piece } from "chess.js";
 import useChessActions from "@/hooks/useChessActions";
 import { useGameStore } from "@/store/gameStore";
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   rank: ChessboardRank;

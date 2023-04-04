@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 
 const PLAYER_COLORS = ["Random", "White", "Black"] as const;
 type PlayerColor = (typeof PLAYER_COLORS)[number];

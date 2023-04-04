@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 import { useSessionStore } from "@/store/sessionStore";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const useTwitchChat = (channel: string) => {
       });
 
       ws.addEventListener("message", (data) => {
-        console.log(data);
+        // console.log(data);
         const message = parseChatMessage(data.data);
         if (!message) return;
 

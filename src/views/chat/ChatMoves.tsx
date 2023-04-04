@@ -1,15 +1,15 @@
 "use client";
 
 import useTwitchChat from "@/hooks/useTwitchChat";
-import { useChatStore } from "@/store/chatMoves";
 import classNames from "classnames";
 import React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useChatStore } from "@/store/chatMovesStore";
 
 const ChatMoves = () => {
   const chatMoves = useChatStore((state) => state.chatMoves).render;
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  useTwitchChat("slayproxx");
+  useTwitchChat("thebausffs");
 
   const [movesListRef] = useAutoAnimate();
 

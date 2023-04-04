@@ -1,4 +1,4 @@
-import { Chess, Color, PieceSymbol, Square } from "chess.js";
+import { Chess, Color, Piece, PieceSymbol, Square } from "chess.js";
 import { create } from "zustand";
 
 const initGame = new Chess();
@@ -16,10 +16,13 @@ type Board = ({
   color: Color;
 } | null)[][];
 
+export type PiecesTaken = { [key in PieceSymbol]: number } & { diff: number };
+
 interface GameStore {
   game: Chess;
   setGame: (g: Chess) => void;
   restartGame: () => void;
+  piecesTaken: { white: PiecesTaken; black: PiecesTaken } | null;
   boardToRender: Board;
   setBoardToRender: (b: Board) => void;
   legalMoves: Move[];
@@ -47,8 +50,33 @@ export const useGameStore = create<GameStore>((set) => ({
         lastMove: undefined,
       };
     }),
+  piecesTaken: null,
   boardToRender: initGame.board(),
-  setBoardToRender: (b) => set(() => ({ boardToRender: b })),
+  setBoardToRender: (b) =>
+    set(() => {
+      const pieces = b.flat().filter(Boolean);
+      const whitePieces = { p: 8, n: 2, b: 2, r: 2, q: 1, k: 1, diff: 0 };
+      const blackPieces = { p: 8, n: 2, b: 2, r: 2, q: 1, k: 1, diff: 0 };
+      let whiteVal = 0;
+      let blackVal = 0;
+      pieces.forEach((p) => {
+        if (!p) return;
+        const val = getPieceValue(p.type);
+        if (p.color === "b") {
+          blackVal += val;
+          return blackPieces[p.type]--;
+        }
+        whiteVal += val;
+        whitePieces[p.type]--;
+      });
+      whitePieces.diff = whiteVal - blackVal;
+      blackPieces.diff = blackVal - whiteVal;
+
+      return {
+        boardToRender: b,
+        piecesTaken: { white: whitePieces, black: blackPieces },
+      };
+    }),
   legalMoves: [],
   setLegalMoves: (m) => set(() => ({ legalMoves: m })),
   playerColor: "w",
@@ -60,3 +88,20 @@ export const useGameStore = create<GameStore>((set) => ({
   lastMove: undefined,
   setLastMove: (v) => set(() => ({ lastMove: v })),
 }));
+
+const getPieceValue = (p: PieceSymbol) => {
+  switch (p) {
+    case "p":
+      return 1;
+    case "b":
+      return 3;
+    case "n":
+      return 3;
+    case "r":
+      return 5;
+    case "q":
+      return 9;
+    default:
+      return 0;
+  }
+};

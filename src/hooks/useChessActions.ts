@@ -1,4 +1,4 @@
-import { useChatStore } from "@/store/chatMoves";
+import { useChatStore } from "@/store/chatMovesStore";
 import { useGameStore } from "@/store/gameStore";
 import { Square } from "chess.js";
 
