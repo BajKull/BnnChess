@@ -28,7 +28,11 @@ export const useChatStore = create<ChatStore>((set) => ({
   chatMoves: { map: new Map(), render: [] },
   isChatTurn: false,
   setIsChatTurn: (v) => set(() => ({ isChatTurn: v })),
-  toggleIsChatTurn: () => set((state) => ({ isChatTurn: !state.isChatTurn })),
+  toggleIsChatTurn: () =>
+    set((state) => {
+      if (!state.isChatTurn) state.resetChatMoves();
+      return { isChatTurn: !state.isChatTurn };
+    }),
   usersVoted: new Set(),
   chatMoveRef: createRef(),
   addUserVote: (v) =>

@@ -38,7 +38,6 @@ const Square = ({
   const dragOffset = useRef<[number, number]>([0, 0]);
   const playerColor = useGameStore((state) => state.playerColor);
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  const resetChatMoves = useChatStore((state) => state.resetChatMoves);
 
   const bind = useGesture({
     onDrag: ({ active, movement: [x, y], xy }) => {
@@ -84,7 +83,6 @@ const Square = ({
       const moveFromSquare = `${file}${rank}` as const;
       const moveToSquare = `${pos.file}${pos.rank}` as const;
       if (isChatTurn) return;
-      resetChatMoves();
       move({ from: moveFromSquare, to: moveToSquare });
     },
   });
