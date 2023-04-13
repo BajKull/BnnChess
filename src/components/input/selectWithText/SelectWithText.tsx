@@ -78,7 +78,7 @@ const SelectWithText = React.forwardRef<HTMLInputElement, IProps>(
         )}
         {isExpanded && (
           <div
-            className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-zinc-800 shadow-lg focus:outline-none"
+            className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-zinc-800 shadow-lg focus:outline-none"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="menu-button"

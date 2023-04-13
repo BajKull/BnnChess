@@ -1,5 +1,6 @@
 import { useChatStore } from "@/store/chatMovesStore";
 import { useGameStore } from "@/store/gameStore";
+import { usePieceStore } from "@/store/pieceStore";
 import { Square } from "chess.js";
 
 interface Move {
@@ -13,6 +14,7 @@ const useChessActions = () => {
   const setLegalMoves = useGameStore((state) => state.setLegalMoves);
   const toggleIsChatTurn = useChatStore((state) => state.toggleIsChatTurn);
   const setLastMove = useGameStore((state) => state.setLastMove);
+  const cancelDrag = usePieceStore((state) => state.cancelDrag);
 
   const move = ({ from, to }: Move) => {
     try {
@@ -22,6 +24,7 @@ const useChessActions = () => {
         game.moves({ verbose: true }).map((m) => ({ from: m.from, to: m.to }))
       );
       toggleIsChatTurn();
+      cancelDrag();
       setLastMove({ from, to });
     } catch (e) {
       return;

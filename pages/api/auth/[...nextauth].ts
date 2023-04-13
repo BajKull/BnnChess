@@ -42,7 +42,7 @@ export const authOptions = {
           refreshToken: token.account?.refresh_token || "",
         };
       }
-      if (Date.now() > token.token.expires * 100) {
+      if (Date.now() > token.token.expires * 1000) {
         const response = await fetch("https://id.twitch.tv/oauth2/token", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams({

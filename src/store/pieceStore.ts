@@ -10,6 +10,7 @@ interface PieceStore {
   setDraggedPiece: (piece: DraggedPiece) => void;
   draggingOver: DraggedPiece | null;
   setDraggingOver: (piece: DraggedPiece) => void;
+  cancelDrag: () => void;
 }
 
 export const usePieceStore = create<PieceStore>((set) => ({
@@ -25,4 +26,10 @@ export const usePieceStore = create<PieceStore>((set) => ({
         return { draggingOver };
       return { draggingOver: piece };
     }),
+  cancelDrag: () =>
+    set(() => ({
+      isPieceDragged: false,
+      draggedPiece: null,
+      draggingOver: null,
+    })),
 }));
