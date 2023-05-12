@@ -15,6 +15,7 @@ const useChessActions = () => {
   const toggleIsChatTurn = useChatStore((state) => state.toggleIsChatTurn);
   const setLastMove = useGameStore((state) => state.setLastMove);
   const cancelDrag = usePieceStore((state) => state.cancelDrag);
+  const cancelClick = usePieceStore((state) => state.cancelClick);
 
   const move = ({ from, to }: Move) => {
     try {
@@ -25,7 +26,10 @@ const useChessActions = () => {
       );
       toggleIsChatTurn();
       cancelDrag();
+      cancelClick();
       setLastMove({ from, to });
+
+      return true;
     } catch (e) {
       return;
     }

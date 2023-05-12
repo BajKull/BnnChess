@@ -8,9 +8,12 @@ import { positionTranslate } from "./utils";
 
 const HelpMoveDots = () => {
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
+  const isPieceClicked = usePieceStore((state) => state.isPieceClicked);
   const draggedPiece = usePieceStore((state) => state.draggedPiece);
-  const draggedPieceSquare =
-    `${draggedPiece?.file}${draggedPiece?.rank}` as Square;
+  const clickedPiece = usePieceStore((state) => state.clickedPiece);
+  const draggedPieceSquare = `${draggedPiece?.file || clickedPiece?.file}${
+    draggedPiece?.rank || clickedPiece?.rank
+  }` as Square;
 
   const game = useGameStore((state) => state.game);
   const moves = game.moves({ square: draggedPieceSquare, verbose: true });
@@ -22,7 +25,7 @@ const HelpMoveDots = () => {
     ...Array.from(new Map(moves.map((m) => [m.to, m])).values()),
   ];
 
-  if (!isPieceDragged || !moves) return null;
+  if (!(isPieceDragged || isPieceClicked) || !moves) return null;
   return (
     <>
       {uniqueMoves.map((m) => (
@@ -39,7 +42,7 @@ const MoveDot = ({ position, flags }: { position: Square; flags: string }) => {
   return (
     <svg
       viewBox="0 0 100 100"
-      className="absolute bottom-0 left-0 h-[12.5%] w-[12.5%]"
+      className="pointer-events-none absolute bottom-0 left-0 h-[12.5%] w-[12.5%]"
       style={positionTranslate({
         rank: parseInt(rank) as ChessboardRank,
         file: file as ChessboardFile,

@@ -11,6 +11,7 @@ import HelpMoveDots from "./HelpMoveDots";
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 import LastMoveHighlight from "./LastMoveHighlight";
 import classNames from "classnames";
+import ClickedHighlight from "./ClickedHighlight";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -57,6 +58,7 @@ const Chessboard = () => {
       <HoverHighlight />
       <HelpMoveDots />
       <LastMoveHighlight />
+      <ClickedHighlight />
     </>
   );
 };

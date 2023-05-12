@@ -1,5 +1,5 @@
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import classnames from "classnames";
 import { a, useSpring } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
@@ -24,9 +24,12 @@ const Square = ({
   occupiedBy,
   ...rest
 }: IProps) => {
+  const clickedPieceRef = usePieceStore((state) => state.clickedPieceRef);
   const togglePieceDrag = usePieceStore((state) => state.toggleIsPieceDragged);
+  const setIsPieceClicked = usePieceStore((state) => state.setIsPieceClicked);
   const setDraggingOver = usePieceStore((state) => state.setDraggingOver);
   const setDraggedPiece = usePieceStore((state) => state.setDraggedPiece);
+  const setClickedPiece = usePieceStore((state) => state.setClickedPiece);
   const { move } = useChessActions();
   const [style, api] = useSpring(() => ({
     x: 0,
@@ -72,6 +75,7 @@ const Square = ({
     },
     onDragEnd: ({ xy }) => {
       togglePieceDrag();
+      if (isChatTurn) return;
       const dropPlaceEls = document.elementsFromPoint(xy[0], xy[1]);
       const dropPlace = dropPlaceEls.find(
         (el) => (el as HTMLElement).dataset.dropplace
@@ -82,13 +86,37 @@ const Square = ({
       const pos: DraggedPiece = JSON.parse(placeOnBoard);
       const moveFromSquare = `${file}${rank}` as const;
       const moveToSquare = `${pos.file}${pos.rank}` as const;
-      if (isChatTurn) return;
-      move({ from: moveFromSquare, to: moveToSquare });
+
+      const success = move({ from: moveFromSquare, to: moveToSquare });
+      if (success) return;
+
+      setIsPieceClicked(true);
+      clickedPieceRef.current = { rank, file };
+      setClickedPiece({ rank, file });
     },
   });
 
   const handleAuxClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
+  };
+
+  useEffect(() => {}, []);
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!clickedPieceRef.current) return;
+    const pieceRef = clickedPieceRef.current;
+    const moveFromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
+    const dropPlace = e.currentTarget.dataset.dropplace;
+    if (!dropPlace) return;
+    const dropPos: DraggedPiece = JSON.parse(dropPlace);
+    const moveToSquare = `${dropPos.file}${dropPos.rank}` as const;
+    const fromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
+    if (moveToSquare === fromSquare) return;
+    const success = move({ from: moveFromSquare, to: moveToSquare });
+    if (success) return;
+    setIsPieceClicked(false);
+    clickedPieceRef.current = null;
+    setClickedPiece(null);
   };
 
   const theme: string = "olive";
@@ -131,6 +159,7 @@ const Square = ({
       onAuxClick={handleAuxClick}
       onContextMenu={(e) => e.preventDefault()}
       {...rest}
+      onClick={handleClick}
     >
       {playerColor === "w" && rank === 1 && (
         <label className={clsText("rank")}>{file}</label>

@@ -9,7 +9,7 @@ import { useChatStore } from "@/store/chatMovesStore";
 const ChatMoves = () => {
   const chatMoves = useChatStore((state) => state.chatMoves).render;
   const isChatTurn = useChatStore((state) => state.isChatTurn);
-  useTwitchChat("esl_dota2");
+  useTwitchChat("rybsonlol_");
 
   const [movesListRef] = useAutoAnimate();
 
