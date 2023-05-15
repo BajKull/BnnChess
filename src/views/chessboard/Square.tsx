@@ -30,6 +30,8 @@ const Square = ({
   const setDraggingOver = usePieceStore((state) => state.setDraggingOver);
   const setDraggedPiece = usePieceStore((state) => state.setDraggedPiece);
   const setClickedPiece = usePieceStore((state) => state.setClickedPiece);
+  const cancelDrag = usePieceStore((state) => state.cancelDrag);
+  const cancelClick = usePieceStore((state) => state.cancelClick);
   const { move } = useChessActions();
   const [style, api] = useSpring(() => ({
     x: 0,
@@ -42,9 +44,14 @@ const Square = ({
   const playerColor = useGameStore((state) => state.playerColor);
   const isChatTurn = useChatStore((state) => state.isChatTurn);
 
+  const cancelDragRef = useRef(false);
+
   const bind = useGesture({
-    onDrag: ({ active, movement: [x, y], xy }) => {
-      console.log("drag");
+    onDrag: ({ active, movement: [x, y], xy, cancel }) => {
+      if (cancelDragRef.current) {
+        cancel();
+        cancelDragRef.current = false;
+      }
       if (!occupiedBy) return;
       api.start({
         x: active ? x + dragOffset.current[0] : 0,
@@ -63,7 +70,6 @@ const Square = ({
       setDraggingOver(pos);
     },
     onDragStart: ({ initial, currentTarget }) => {
-      console.log("drag start");
       togglePieceDrag();
       setDraggedPiece({ rank, file });
       if (currentTarget instanceof Element) {
@@ -75,7 +81,12 @@ const Square = ({
         dragOffset.current = offset;
       }
     },
-    onDragEnd: ({ xy }) => {
+    onDragEnd: ({ xy, canceled }) => {
+      if (canceled) {
+        cancelDrag();
+        cancelClick();
+        return;
+      }
       togglePieceDrag();
       if (isChatTurn) return;
       const dropPlaceEls = document.elementsFromPoint(xy[0], xy[1]);
@@ -105,21 +116,30 @@ const Square = ({
   useEffect(() => {}, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log("click");
-    if (!clickedPieceRef.current) return;
-    const pieceRef = clickedPieceRef.current;
-    const moveFromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
-    const dropPlace = e.currentTarget.dataset.dropplace;
-    if (!dropPlace) return;
-    const dropPos: DraggedPiece = JSON.parse(dropPlace);
-    const moveToSquare = `${dropPos.file}${dropPos.rank}` as const;
-    const fromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
-    if (moveToSquare === fromSquare) return;
-    const success = move({ from: moveFromSquare, to: moveToSquare });
-    if (success) return;
-    setIsPieceClicked(false);
-    clickedPieceRef.current = null;
-    setClickedPiece(null);
+    const leftClick = () => {
+      if (!clickedPieceRef.current) return;
+      const pieceRef = clickedPieceRef.current;
+      const moveFromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
+      const dropPlace = e.currentTarget.dataset.dropplace;
+      if (!dropPlace) return;
+      const dropPos: DraggedPiece = JSON.parse(dropPlace);
+      const moveToSquare = `${dropPos.file}${dropPos.rank}` as const;
+      const fromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
+      if (moveToSquare === fromSquare) return;
+      const success = move({ from: moveFromSquare, to: moveToSquare });
+      if (success) return;
+      setIsPieceClicked(false);
+      clickedPieceRef.current = null;
+      setClickedPiece(null);
+    };
+    const rightClick = () => {
+      cancelDrag();
+      cancelClick();
+      cancelDragRef.current = true;
+    };
+
+    if (e.button === 0) leftClick();
+    if (e.button === 2) rightClick();
   };
 
   const theme: string = "olive";
