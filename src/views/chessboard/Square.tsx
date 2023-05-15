@@ -44,6 +44,7 @@ const Square = ({
 
   const bind = useGesture({
     onDrag: ({ active, movement: [x, y], xy }) => {
+      console.log("drag");
       if (!occupiedBy) return;
       api.start({
         x: active ? x + dragOffset.current[0] : 0,
@@ -62,6 +63,7 @@ const Square = ({
       setDraggingOver(pos);
     },
     onDragStart: ({ initial, currentTarget }) => {
+      console.log("drag start");
       togglePieceDrag();
       setDraggedPiece({ rank, file });
       if (currentTarget instanceof Element) {
@@ -102,7 +104,8 @@ const Square = ({
 
   useEffect(() => {}, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    console.log("click");
     if (!clickedPieceRef.current) return;
     const pieceRef = clickedPieceRef.current;
     const moveFromSquare = `${pieceRef.file}${pieceRef.rank}` as const;
@@ -159,7 +162,7 @@ const Square = ({
       onAuxClick={handleAuxClick}
       onContextMenu={(e) => e.preventDefault()}
       {...rest}
-      onClick={handleClick}
+      onMouseDown={handleMouseDown}
     >
       {playerColor === "w" && rank === 1 && (
         <label className={clsText("rank")}>{file}</label>
