@@ -21,9 +21,9 @@ const useTwitchChat = (channel: string) => {
       });
 
       ws.addEventListener("message", (data) => {
-        // console.log(data);
         const message = parseChatMessage(data.data);
         if (!message) return;
+        if (message.system) return ws.send(`PONG ${message.content}`);
 
         const [from, to] = message.content.split("-");
         // if (!to || !from) return
@@ -40,12 +40,27 @@ const useTwitchChat = (channel: string) => {
   }, [addUserVote, channel, session]);
 };
 
-const parseChatMessage = (msg: string) => {
+type Msg = {
+  username: string;
+  channel: string;
+  content: string;
+  system?: boolean;
+};
+
+const parseChatMessage = (msg: string): Msg | undefined => {
   const message = {
     username: "",
     channel: "",
     content: "",
   };
+
+  if (msg.startsWith("PING"))
+    return {
+      username: "",
+      channel: "",
+      content: msg.replace("PING ", ""),
+      system: true,
+    };
 
   const [nick, text] = msg.split("PRIVMSG");
 
@@ -62,6 +77,7 @@ const parseChatMessage = (msg: string) => {
     if (text[i] === ":") {
       message.channel = text.slice(1, i - 1);
       message.content = text.slice(i + 1).replace(/(\r\n|\n|\r)/gm, "");
+      break;
     }
   }
   return message;
