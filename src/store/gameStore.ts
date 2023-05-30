@@ -31,10 +31,14 @@ interface GameStore {
   setPlayerColor: (v: "b" | "w") => void;
   moveTime: number;
   setMoveTime: (v: number) => void;
+  autoPromoteToQueen: boolean;
+  setAutoPromoteToQueen: (v: boolean) => void;
   gameState: GameState;
   setGameState: (v: GameState) => void;
   lastMove?: Move;
   setLastMove: (v?: Move) => void;
+  showPromotionScreen: boolean;
+  setShowPromotionScreen: (v: boolean) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -83,10 +87,14 @@ export const useGameStore = create<GameStore>((set) => ({
   setPlayerColor: (v) => set(() => ({ playerColor: v })),
   moveTime: 30,
   setMoveTime: (v) => set(() => ({ moveTime: v })),
+  autoPromoteToQueen: true,
+  setAutoPromoteToQueen: (v) => set(() => ({ autoPromoteToQueen: v })),
   gameState: "settings",
   setGameState: (v) => set(() => ({ gameState: v })),
   lastMove: undefined,
   setLastMove: (v) => set(() => ({ lastMove: v })),
+  showPromotionScreen: false,
+  setShowPromotionScreen: (v) => set(() => ({ showPromotionScreen: v })),
 }));
 
 const getPieceValue = (p: PieceSymbol) => {
