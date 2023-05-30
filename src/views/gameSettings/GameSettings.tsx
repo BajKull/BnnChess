@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useChatStore } from "@/store/chatMovesStore";
+import Switch from "@/components/input/switch/Switch";
 
 const PLAYER_COLORS = ["Random", "White", "Black"] as const;
 type PlayerColor = (typeof PLAYER_COLORS)[number];
@@ -23,6 +24,9 @@ const GameSettings = () => {
   const setPlayerColor = useGameStore((state) => state.setPlayerColor);
   const restartGame = useGameStore((state) => state.restartGame);
   const setIsChatTurn = useChatStore((state) => state.setIsChatTurn);
+  const setAutoPromoteToQueen = useGameStore(
+    (state) => state.setAutoPromoteToQueen
+  );
   const {
     register,
     handleSubmit,
@@ -33,6 +37,7 @@ const GameSettings = () => {
     defaultValues: {
       moveTime: parseInt(TIME_OPTIONS[3]),
       playerColor: "Random",
+      autoPromotion: true,
     },
   });
 
@@ -47,6 +52,7 @@ const GameSettings = () => {
 
     if (color === "b") setIsChatTurn(true);
     else setIsChatTurn(false);
+    setAutoPromoteToQueen(data.autoPromotion);
     setGameState("game");
     setMoveTime(data.moveTime);
     setPlayerColor(color);
@@ -88,6 +94,9 @@ const GameSettings = () => {
           error={errors.moveTime}
           {...register("moveTime")}
         />
+        <div className="pb-10">
+          <Switch defaultChecked={true}>Always promote to queen</Switch>
+        </div>
         <Button primary className="mt-auto w-full" type="submit">
           Play
         </Button>
@@ -106,6 +115,7 @@ const settingsSchema = z.object({
     z.literal("Black"),
     z.literal("White"),
   ]),
+  autoPromotion: z.boolean(),
 });
 
 type SettingsSchema = z.infer<typeof settingsSchema>;
