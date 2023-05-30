@@ -71,6 +71,11 @@ const Avatar = ({
               ))}
             </div>
           ))}
+          {!!piecesTaken?.diff && piecesTaken.diff > 0 && (
+            <span className="mt-2 ml-2 text-xs leading-[10px]">
+              +{piecesTaken.diff}
+            </span>
+          )}
         </div>
       </div>
     </div>

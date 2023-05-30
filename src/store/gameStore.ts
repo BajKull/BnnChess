@@ -73,8 +73,8 @@ export const useGameStore = create<GameStore>((set) => ({
         whiteVal += val;
         whitePieces[p.type]--;
       });
-      whitePieces.diff = whiteVal - blackVal;
-      blackPieces.diff = blackVal - whiteVal;
+      whitePieces.diff = blackVal - whiteVal;
+      blackPieces.diff = whiteVal - blackVal;
 
       return {
         boardToRender: b,
