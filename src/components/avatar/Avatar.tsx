@@ -84,6 +84,9 @@ const getPiecesTakenArray = (piecesTaken?: PiecesTaken) => {
   const { diff, ...pieces } = piecesTaken;
   const keys = Object.keys(pieces) as Array<keyof typeof piecesTaken>;
   return keys.map(
-    (p) => p.repeat(piecesTaken[p] || 0).split("") as PieceSymbol[]
+    (p) =>
+      p
+        .repeat(piecesTaken[p] <= 0 ? 0 : piecesTaken[p])
+        .split("") as PieceSymbol[]
   );
 };
