@@ -35,12 +35,33 @@ export const positionTranslate = ({
   };
 };
 
+export const promotionToPieceSymbol = (s: string) => {
+  switch (s) {
+    case "queen":
+      return "q";
+    case "rook":
+      return "r";
+    case "bishop":
+      return "b";
+    case "knight":
+      return "n";
+    default:
+      return "q";
+  }
+};
+
 type Move = {
   from: string;
   to: string;
 };
 
-export const generateFakeMove = (legalMoves: Move[]) => {
-  const randomMove = Math.floor(Math.random() * legalMoves.length);
-  return { from: legalMoves[randomMove].from, to: legalMoves[randomMove].to };
+export const generateFakeMove = (legalMoves: Move[], promotion?: Move) => {
+  if (promotion) {
+    const promotions = ["knight", "bishop", "rook", "queen"];
+    const randomMove = Math.floor(Math.random() * promotions.length);
+    return { from: promotions[randomMove] };
+  } else {
+    const randomMove = Math.floor(Math.random() * legalMoves.length);
+    return { from: legalMoves[randomMove].from, to: legalMoves[randomMove].to };
+  }
 };

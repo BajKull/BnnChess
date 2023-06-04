@@ -31,7 +31,8 @@ const ChatPanel = () => {
           resetTimerTrigger();
           return;
         }
-        move(chatMoveRef.current);
+        const success = move(chatMoveRef.current);
+        if (!success) resetTimerTrigger();
       }, moveTime * 1000);
     };
 

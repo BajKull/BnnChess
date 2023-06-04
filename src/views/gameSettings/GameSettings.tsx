@@ -95,7 +95,9 @@ const GameSettings = () => {
           {...register("moveTime")}
         />
         <div className="pb-10">
-          <Switch defaultChecked={true}>Always promote to queen</Switch>
+          <Switch defaultChecked={true} {...register("autoPromotion")}>
+            Always promote to queen
+          </Switch>
         </div>
         <Button primary className="mt-auto w-full" type="submit">
           Play

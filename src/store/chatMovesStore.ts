@@ -5,6 +5,8 @@ import { createRef } from "react";
 import { create } from "zustand";
 import { useGameStore } from "./gameStore";
 
+const PROMOTIONS = ["knight", "bishop", "rook", "queen"];
+
 type Votes = Map<string, string[]>;
 type Move = {
   from: string;
@@ -39,14 +41,20 @@ export const useChatStore = create<ChatStore>((set) => ({
     set((state) => {
       if (!state.isChatTurn) return state;
       const legalMoves = useGameStore.getState().legalMoves;
+      const showPromotionScreen = useGameStore.getState().showPromotionScreen;
 
-      // if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to))
+      // if (showPromotionScreen && !PROMOTIONS.includes(v.move.from))
+      //   return state;
+
+      // if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to) && !showPromotionScreen)
       //   return state;
       if (state.usersVoted.has(v.user)) return state;
 
-      const fakeMove = generateFakeMove(legalMoves);
+      const fakeMove = generateFakeMove(legalMoves, showPromotionScreen);
       // const moveKey = `${v.move.from} - ${v.move.to}`;
-      const moveKey = `${fakeMove.from} - ${fakeMove.to}`;
+      const moveKey = showPromotionScreen
+        ? fakeMove.from
+        : `${fakeMove.from} - ${fakeMove.to}`;
 
       const moveVoters = state.chatMoves.map.get(moveKey);
 

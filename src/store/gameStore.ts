@@ -37,8 +37,8 @@ interface GameStore {
   setGameState: (v: GameState) => void;
   lastMove?: Move;
   setLastMove: (v?: Move) => void;
-  showPromotionScreen: boolean;
-  setShowPromotionScreen: (v: boolean) => void;
+  showPromotionScreen?: Move;
+  setShowPromotionScreen: (v?: Move) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -46,7 +46,7 @@ export const useGameStore = create<GameStore>((set) => ({
   setGame: (g) => set(() => ({ game: g })),
   restartGame: () =>
     set(() => {
-      const newGame = new Chess();
+      const newGame = new Chess("k7/8/2Q5/8/8/8/7p/K7 w - - 0 1");
       return {
         game: newGame,
         legalMoves: newGame.moves({ verbose: true }),
@@ -93,7 +93,7 @@ export const useGameStore = create<GameStore>((set) => ({
   setGameState: (v) => set(() => ({ gameState: v })),
   lastMove: undefined,
   setLastMove: (v) => set(() => ({ lastMove: v })),
-  showPromotionScreen: false,
+  showPromotionScreen: undefined,
   setShowPromotionScreen: (v) => set(() => ({ showPromotionScreen: v })),
 }));
 
