@@ -13,6 +13,7 @@ import LastMoveHighlight from "./LastMoveHighlight";
 import classNames from "classnames";
 import ClickedHighlight from "./ClickedHighlight";
 import PromotionScreen from "./PromotionScreen";
+import GameOver from "./GameOver";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -61,6 +62,7 @@ const Chessboard = () => {
       <LastMoveHighlight />
       <ClickedHighlight />
       <PromotionScreen />
+      <GameOver />
     </>
   );
 };

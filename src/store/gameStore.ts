@@ -17,6 +17,7 @@ type Board = ({
 } | null)[][];
 
 export type PiecesTaken = { [key in PieceSymbol]: number } & { diff: number };
+export type GameOverValue = Color | "draw";
 
 interface GameStore {
   game: Chess;
@@ -39,6 +40,8 @@ interface GameStore {
   setLastMove: (v?: Move) => void;
   showPromotionScreen?: Move;
   setShowPromotionScreen: (v?: Move) => void;
+  gameOver?: GameOverValue;
+  setGameOver: (v?: GameOverValue) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -95,6 +98,8 @@ export const useGameStore = create<GameStore>((set) => ({
   setLastMove: (v) => set(() => ({ lastMove: v })),
   showPromotionScreen: undefined,
   setShowPromotionScreen: (v) => set(() => ({ showPromotionScreen: v })),
+  gameOver: undefined,
+  setGameOver: (v) => set(() => ({ gameOver: v })),
 }));
 
 const getPieceValue = (p: PieceSymbol) => {

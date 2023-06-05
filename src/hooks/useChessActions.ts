@@ -26,6 +26,7 @@ const useChessActions = () => {
   const setShowPromotionScreen = useGameStore(
     (state) => state.setShowPromotionScreen
   );
+  const setGameOver = useGameStore((state) => state.setGameOver);
 
   const move = ({ from, to, promotion }: Move) => {
     try {
@@ -47,16 +48,23 @@ const useChessActions = () => {
       checkIfPromotion();
 
       game.move({ from, to, promotion });
-
       setBoardToRender(game.board());
       setLegalMoves(
         game.moves({ verbose: true }).map((m) => ({ from: m.from, to: m.to }))
       );
-      toggleIsChatTurn();
       cancelDrag();
       cancelClick();
       setLastMove({ from, to });
       setShowPromotionScreen(undefined);
+
+      if (game.isGameOver()) {
+        if (game.isStalemate()) setGameOver("draw");
+        else if (game.isThreefoldRepetition()) setGameOver("draw");
+        else if (game.isInsufficientMaterial()) setGameOver("draw");
+        else setGameOver(game.turn());
+        return;
+      }
+      toggleIsChatTurn();
 
       return true;
     } catch (e) {
