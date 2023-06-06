@@ -59,10 +59,9 @@ const GameSettings = () => {
     restartGame();
   };
 
-  const setColor = (v: string) => {
-    const value = v as PlayerColor;
-    setValue("playerColor", value);
-    setPlayerColorState(value);
+  const setColor = (v: PlayerColor) => {
+    setValue("playerColor", v);
+    setPlayerColorState(v);
   };
 
   return (

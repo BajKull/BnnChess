@@ -6,20 +6,21 @@ import { nanoid } from "nanoid";
 import React, { useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
-  options: string[];
-  value: string;
-  setValue: (v: string) => void;
+interface IProps<T extends string>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  options: T[];
+  value: T;
+  setValue: (v: T) => void;
   error?: FieldError | undefined;
 }
-const Select = ({
+const Select = <T extends string>({
   options,
   error,
   value,
   className,
   setValue,
   ...props
-}: IProps) => {
+}: IProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const selectRef = useRef(null);
 
