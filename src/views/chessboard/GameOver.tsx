@@ -5,6 +5,7 @@ import React from "react";
 import GigaChadImage from "@/../public/gigachad.webp";
 import Avatar from "@/components/avatar/Avatar";
 import Image from "next/image";
+import { useChatStore } from "@/store/chatMovesStore";
 
 const GameOver = () => {
   const gameOver = useGameStore((state) => state.gameOver);
@@ -13,15 +14,17 @@ const GameOver = () => {
   const setPlayerColor = useGameStore((state) => state.setPlayerColor);
   const restartGame = useGameStore((state) => state.restartGame);
   const setGameOver = useGameStore((state) => state.setGameOver);
+  const setIsChatTurn = useChatStore((state) => state.setIsChatTurn);
+  const resetChatMoves = useChatStore((state) => state.resetChatMoves);
 
   const restart = () => {
-    const getColor = () => {
-      if (playerColor === "w") return "b";
-      return "w";
-    };
-    setPlayerColor(getColor());
+    const color = playerColor === "w" ? "b" : "w";
+
+    setPlayerColor(color);
+    setIsChatTurn(color === "b" ? true : false);
     setGameOver(undefined);
     restartGame();
+    resetChatMoves();
   };
 
   if (!gameOver) return null;

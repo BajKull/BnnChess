@@ -23,6 +23,7 @@ const useChessActions = () => {
   const cancelDrag = usePieceStore((state) => state.cancelDrag);
   const cancelClick = usePieceStore((state) => state.cancelClick);
   const resetChatMoves = useChatStore((state) => state.resetChatMoves);
+  const setIsChatTurn = useChatStore((state) => state.setIsChatTurn);
   const setShowPromotionScreen = useGameStore(
     (state) => state.setShowPromotionScreen
   );
@@ -58,6 +59,7 @@ const useChessActions = () => {
       setShowPromotionScreen(undefined);
 
       if (game.isGameOver()) {
+        setIsChatTurn(false);
         if (game.isStalemate()) setGameOver("draw");
         else if (game.isThreefoldRepetition()) setGameOver("draw");
         else if (game.isInsufficientMaterial()) setGameOver("draw");
