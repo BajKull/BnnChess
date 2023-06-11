@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ToastWrapper = () => {
-  return <ToastContainer position="bottom-right" />;
+  return <ToastContainer position="bottom-right" limit={3} />;
 };
 
 export default ToastWrapper;
