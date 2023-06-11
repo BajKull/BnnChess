@@ -16,7 +16,7 @@ const Modal = ({ children, onClose, show, ...props }: IProps) => {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { duration: 250 },
+    config: { duration: 150 },
   });
 
   useEffect(() => setMounted(true), []);
@@ -36,7 +36,7 @@ const Modal = ({ children, onClose, show, ...props }: IProps) => {
                 onClick={() => onClose()}
               />
               <div
-                className="container-shadow flex h-5/6 min-h-[350px] w-11/12 items-center justify-center rounded bg-zinc-900 p-5 md:h-2/3 md:w-3/4 xl:w-2/3"
+                className="container-shadow custom-scroll flex h-5/6 min-h-[350px] w-11/12 items-center justify-center overflow-y-auto rounded-md bg-zinc-900 p-5 md:h-2/3 md:w-3/4 lg:p-10 xl:w-2/3"
                 {...props}
               >
                 <div className="relative h-full w-full">

@@ -49,7 +49,7 @@ export const useGameStore = create<GameStore>((set) => ({
   setGame: (g) => set(() => ({ game: g })),
   restartGame: () =>
     set(() => {
-      const newGame = new Chess("k7/8/2Q5/8/8/8/7p/K7 w - - 0 1");
+      const newGame = new Chess();
       return {
         game: newGame,
         legalMoves: newGame.moves({ verbose: true }),

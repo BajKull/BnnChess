@@ -27,7 +27,10 @@ const useTwitchChat = (channel: string) => {
 
         const [from, to] = message.content.split("-");
         // if (!to || !from) return
-        const vote = { user: message.username, move: { from, to } };
+        const vote = {
+          user: message.username,
+          move: { from: from.trim(), to: to.trim() },
+        };
         addUserVote(vote);
       });
     };

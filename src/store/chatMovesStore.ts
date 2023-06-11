@@ -43,18 +43,21 @@ export const useChatStore = create<ChatStore>((set) => ({
       const legalMoves = useGameStore.getState().legalMoves;
       const showPromotionScreen = useGameStore.getState().showPromotionScreen;
 
-      // if (showPromotionScreen && !PROMOTIONS.includes(v.move.from))
-      //   return state;
+      if (showPromotionScreen && !PROMOTIONS.includes(v.move.from))
+        return state;
 
-      // if (!legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to) && !showPromotionScreen)
-      //   return state;
+      if (
+        !legalMoves.find((m) => m.from === v.move.from && m.to === v.move.to) &&
+        !showPromotionScreen
+      )
+        return state;
       if (state.usersVoted.has(v.user)) return state;
 
-      const fakeMove = generateFakeMove(legalMoves, showPromotionScreen);
-      // const moveKey = `${v.move.from} - ${v.move.to}`;
-      const moveKey = showPromotionScreen
-        ? fakeMove.from
-        : `${fakeMove.from} - ${fakeMove.to}`;
+      // const fakeMove = generateFakeMove(legalMoves, showPromotionScreen);
+      const moveKey = `${v.move.from} - ${v.move.to}`;
+      // const moveKey = showPromotionScreen
+      //   ? fakeMove.from
+      //   : `${fakeMove.from} - ${fakeMove.to}`;
 
       const moveVoters = state.chatMoves.map.get(moveKey);
 
