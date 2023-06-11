@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
+    "prettier.prettierPath": "./node_modules/prettier",
     "restoreTerminals.terminals": [
       {
         "splitTerminals": [

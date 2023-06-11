@@ -15,7 +15,7 @@ const Modal = ({ children, onClose, show, ...props }: IProps) => {
   const transitions = useTransition(show, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    leave: { opacity: 1 },
+    leave: { opacity: 0 },
     config: { duration: 250 },
   });
 
