@@ -1,4 +1,11 @@
 import Chessboard from "@/views/chessboard/Chessboard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BnnChess",
+  description:
+    "BnnChess allows streamers to play with their Twitch chat in real time. Let your chat finally prove that they are better than you!",
+};
 
 export default async function Home() {
   return (

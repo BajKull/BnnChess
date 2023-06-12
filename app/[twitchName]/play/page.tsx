@@ -1,9 +1,6 @@
 import { authOptions } from "@/../pages/api/auth/[...nextauth]";
-import ChatMoves from "@/views/chat/ChatMoves";
 import Chessboard from "@/views/chessboard/Chessboard";
 import { ROUTES } from "@/constants/routes";
-import { useGameStore } from "@/store/gameStore";
-import GameSettings from "@/views/gameSettings/GameSettings";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import ChatPanel from "@/views/chat/ChatPanel";
@@ -11,6 +8,14 @@ import PlayerAvatar from "@/views/gameSettings/PlayerAvatar";
 
 interface Params {
   params: { twitchName: string };
+}
+
+export async function generateMetadata({ params }: Params) {
+  const nick = await getServerSession(authOptions);
+  const twitchName = params.twitchName;
+  return {
+    title: `BnnChess | ${nick?.user.name || twitchName}`,
+  };
 }
 
 export default async function Page({ params }: Params) {
