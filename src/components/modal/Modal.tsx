@@ -40,12 +40,12 @@ const Modal = ({ children, onClose, show, ...props }: IProps) => {
                 {...props}
               >
                 <div className="relative h-full w-full">
-                  <figure
+                  <button
                     className="absolute top-0 right-0 cursor-pointer fill-white"
                     onClick={() => onClose()}
                   >
                     <XMark />
-                  </figure>
+                  </button>
                   {children}
                 </div>
               </div>
