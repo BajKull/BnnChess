@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ModalScreen = "howToMove";
+type ModalScreen = "howToMove" | "howToPromote";
 
 interface ModalStore {
   modal?: ModalScreen;
