@@ -9,7 +9,7 @@ const Tutorials = () => {
   const [howToMoveStorage, setHowToMoveStorage] = useLocalStorage(
     LOCALSTORAGE_KEYS.TUTORIALS.HOW_TO_VOTE
   );
-  const [howToPromoteStorage, setHowToPromoteStorage] = useLocalStorage(
+  const [_howToPromoteStorage, setHowToPromoteStorage] = useLocalStorage(
     LOCALSTORAGE_KEYS.TUTORIALS.HOW_TO_PROMOTE
   );
   const modalScreen = useModalStore((state) => state.modal);
@@ -22,7 +22,7 @@ const Tutorials = () => {
       />
       <HowToPromote
         setModalStorage={setHowToPromoteStorage}
-        show={modalScreen === "howToPromote" || !howToPromoteStorage}
+        show={modalScreen === "howToPromote"}
       />
     </>
   );

@@ -1,9 +1,12 @@
 import BoardPiece from "@/components/pieces/BoardPiece";
+import { LOCALSTORAGE_KEYS } from "@/constants/localstorage";
 import useChessActions from "@/hooks/useChessActions";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { useChatStore } from "@/store/chatMovesStore";
 import { useGameStore } from "@/store/gameStore";
+import { useModalStore } from "@/store/modalStore";
 import { PieceSymbol } from "chess.js";
-import React from "react";
+import React, { useEffect } from "react";
 
 const PromotionScreen = () => {
   const isChatTurn = useChatStore((state) => state.isChatTurn);
@@ -11,6 +14,11 @@ const PromotionScreen = () => {
   const promotionScreen = useGameStore((state) => state.showPromotionScreen);
   const setShowPromotionScreen = useGameStore(
     (state) => state.setShowPromotionScreen
+  );
+  const setModalScreen = useModalStore((state) => state.setModal);
+
+  const [howToPromoteStorage, _setHowToPromoteStorage] = useLocalStorage(
+    LOCALSTORAGE_KEYS.TUTORIALS.HOW_TO_PROMOTE
   );
 
   const { move } = useChessActions();
@@ -27,6 +35,10 @@ const PromotionScreen = () => {
     move({ from, to, promotion });
     setShowPromotionScreen(undefined);
   };
+
+  useEffect(() => {
+    if (promotionScreen && !howToPromoteStorage) setModalScreen("howToPromote");
+  }, [howToPromoteStorage, promotionScreen, setModalScreen]);
 
   if (!promotionScreen) return null;
 

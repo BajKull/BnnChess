@@ -185,16 +185,16 @@ const Square = ({
       onMouseDown={handleMouseDown}
     >
       {playerColor === "w" && rank === 1 && (
-        <label className={clsText("rank")}>{file}</label>
+        <span className={clsText("rank")}>{file}</span>
       )}
       {playerColor === "b" && rank === 8 && (
-        <label className={clsText("rank")}>{file}</label>
+        <span className={clsText("rank")}>{file}</span>
       )}
       {playerColor === "w" && file === "a" && (
-        <label className={clsText("file")}>{rank}</label>
+        <span className={clsText("file")}>{rank}</span>
       )}
       {playerColor === "b" && file === "h" && (
-        <label className={clsText("file")}>{rank}</label>
+        <span className={clsText("file")}>{rank}</span>
       )}
       {children && (
         <a.div

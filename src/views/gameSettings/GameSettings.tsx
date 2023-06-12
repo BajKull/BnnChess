@@ -71,19 +71,23 @@ const GameSettings = () => {
     >
       <p className="mb-5 text-xl font-semibold text-white">Game settings</p>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label className="mt-3 mb-2 block text-sm font-medium text-white">
-          Player color
+        <label className="mt-3 block text-sm font-medium text-white">
+          <span className="block pb-2">Player color</span>
+          <Select
+            options={[...PLAYER_COLORS]}
+            value={playerColorState}
+            setValue={setColor}
+            error={errors.playerColor}
+          />
         </label>
-        <Select
-          options={[...PLAYER_COLORS]}
-          value={playerColorState}
-          setValue={setColor}
-          error={errors.playerColor}
-        />
-        <label className="mt-3 mb-2 block text-sm font-medium text-white">
+        <label
+          className="mt-3 mb-2 block text-sm font-medium text-white"
+          htmlFor="moveTime"
+        >
           Move time (s)
         </label>
         <SelectWithText
+          id="moveTime"
           className="pb-10"
           options={TIME_OPTIONS}
           defaultValue={30}
