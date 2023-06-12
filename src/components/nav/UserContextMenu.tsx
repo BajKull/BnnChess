@@ -14,14 +14,14 @@ const UserContextMenu = React.forwardRef<HTMLDivElement, IProps>(
   (props, ref) => {
     const { user, className, ...otherProps } = props;
     const clsDiv = classNames(
-      "absolute -bottom-5 right-0 translate-y-full overflow-hidden rounded bg-zinc-800 text-white min-w-[225px] z-30",
+      "absolute -bottom-5 right-0 translate-y-full overflow-hidden rounded bg-zinc-800 text-white min-w-[225px] z-30 shadow shadow-zinc-700",
       className
     );
 
     return (
       <div className={clsDiv} ref={ref} {...otherProps}>
         <ul className="px-4 py-5 text-left">
-          <li className="mx-2 mb-5 border-b border-zinc-600">
+          <li className="shadow- mx-2 mb-5 border-b border-zinc-600">
             <div className="flex w-full items-center pb-5">
               {user?.image && (
                 <figure className="block h-12 w-12">
