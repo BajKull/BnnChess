@@ -3,7 +3,7 @@
 import { useTransition, animated } from "@react-spring/web";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import XMark from "@/../public/xmark.svg";
+import XMark from "@/../public/icons/xmark.svg";
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void;

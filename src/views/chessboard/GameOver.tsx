@@ -2,8 +2,7 @@ import Button from "@/components/button/Button";
 import { useGameStore } from "@/store/gameStore";
 import { useSessionStore } from "@/store/sessionStore";
 import React from "react";
-import GigaChadImage from "@/../public/gigachad.webp";
-import Avatar from "@/components/avatar/Avatar";
+import GigaChadImage from "@/../public/images/gigachad.webp";
 import Image from "next/image";
 import { useChatStore } from "@/store/chatMovesStore";
 

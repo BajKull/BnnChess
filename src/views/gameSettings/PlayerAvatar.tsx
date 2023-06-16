@@ -4,7 +4,7 @@ import Avatar from "@/components/avatar/Avatar";
 import { useGameStore } from "@/store/gameStore";
 import { useSessionStore } from "@/store/sessionStore";
 import React from "react";
-import GigaChadImage from "@/../public/gigachad.webp";
+import GigaChadImage from "@/../public/images/gigachad.webp";
 import classNames from "classnames";
 
 interface IProps {
