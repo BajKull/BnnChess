@@ -2,7 +2,9 @@ import Button from "@/components/button/Button";
 import FakeChat from "@/views/chat/FakeChat";
 import HowToPlay from "@/views/index/HowToPlay";
 import { Metadata } from "next";
-import TwitchIcon from "@/../public/icons/b.svg";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
+import TwitchButton from "@/components/button/twitch/TwitchButton";
 
 export const metadata: Metadata = {
   title: "BnnChess",
@@ -11,8 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
   return (
-    <div className="mx-auto max-w-7xl px-5 text-white">
+    <div className="mx-auto max-w-7xl px-5 pb-10 text-white">
       <section className="mt-10 grid lg:mt-20 lg:grid-cols-2 lg:gap-10">
         <div className="mb-10 flex flex-col justify-center text-center lg:mb-0 lg:text-left">
           <h1 className="text-4xl font-bold lg:text-6xl">
@@ -21,9 +24,9 @@ export default async function Home() {
               with your <span className="text-purple-600">chat</span>
             </span>
           </h1>
-          <p className="mt-5 text-lg">
-            No need to install or setup anything. Free and easy to use for
-            everyone.
+          <p className="mt-5 text-gray-300 lg:text-lg">
+            Host a match where your viewers can finally challenge you all at
+            once. No need to install or setup anything.
           </p>
           <Button primary size="xl" className="mx-auto mt-7 w-fit lg:mx-0">
             Play now!
@@ -34,10 +37,21 @@ export default async function Home() {
         </div>
       </section>
       <section className="mt-16 lg:mt-32">
-        <h2 className="text-center text-3xl font-bold lg:text-4xl">
+        <h2 className="mb-5 text-center text-3xl font-bold lg:text-4xl">
           Make the game more interactive!
         </h2>
+        <p className="mb-10 text-center text-gray-300 lg:text-lg">
+          Instead of playing one person at a time, let all your viewers prove
+          that they are as good as they pretend to be.
+        </p>
         <HowToPlay />
+        {session ? (
+          <Button primary className="mx-auto mt-10 block" size="large">
+            Host a match
+          </Button>
+        ) : (
+          <TwitchButton></TwitchButton>
+        )}
       </section>
     </div>
   );
