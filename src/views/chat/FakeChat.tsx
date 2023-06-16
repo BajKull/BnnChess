@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { generateFakeMove } from "../chessboard/utils";
 import colors from "tailwindcss/colors";
 
-const MESSAGES_LIMIT = 25;
-
 type Msg = {
   user: { color: string; name: string };
   content: string;
@@ -17,41 +15,24 @@ interface IProps {
 
 const FakeChat = ({ visibleMessages }: IProps) => {
   const [messages, setMessages] = useState<Msg[]>([]);
-  const [messagesTranslateAmount, setMessagesTranslateAmount] = useState(0);
   const timerRef = useRef<NodeJS.Timeout>();
-  const messagesLengthRef = useRef(0);
+  const messagesDisplayedRef = useRef(0);
 
   useEffect(() => {
     const getRandomTime = () => Math.floor(Math.random() * 1250 + 250);
     const runTimeout = () => {
-      if (messagesLengthRef.current < MESSAGES_LIMIT)
-        setMessages((m) => {
-          if (m.length >= visibleMessages) {
-            const movesOffScreen = [];
-            for (let i = m.length; i <= MESSAGES_LIMIT; i++) {
-              const move = generateFakeMove(moves);
-              movesOffScreen.push({
-                user: users[i % users.length],
-                content: `${move.from} - ${move.to}`,
-              });
-            }
-            messagesLengthRef.current = m.length;
-            return [...m, ...movesOffScreen];
-          }
-          messagesLengthRef.current = m.length;
-          const move = generateFakeMove(moves);
-          return [
-            ...m,
-            {
-              user: users[m.length % users.length],
-              content: `${move.from} - ${move.to}`,
-            },
-          ];
-        });
-      else
-        setMessagesTranslateAmount(
-          (val) => (val + 32) % ((MESSAGES_LIMIT - 13) * 32)
-        );
+      setMessages((m) => {
+        const move = generateFakeMove(moves);
+        const currentArray = m.length >= visibleMessages ? m.slice(1) : m;
+        return [
+          ...currentArray,
+          {
+            user: users[messagesDisplayedRef.current % users.length],
+            content: `${move.from} - ${move.to}`,
+          },
+        ];
+      });
+      messagesDisplayedRef.current++;
       setTimeout(runTimeout, getRandomTime());
     };
     if (!timerRef.current)
@@ -63,25 +44,23 @@ const FakeChat = ({ visibleMessages }: IProps) => {
   }, [visibleMessages]);
 
   return (
-    <div className="custom-scroll max-h-full overflow-y-hidden">
-      <div style={{ transform: `translateY(-${messagesTranslateAmount}px)` }}>
-        {messages.length < visibleMessages && (
-          <p className="h-8 px-2 py-1 text-sm font-semibold text-zinc-600">
-            Welcome to the chat room!
-          </p>
-        )}
-        {messages.map((m, i) => (
-          <p
-            key={`fakeChatMsg ${m.user} ${i}`}
-            className="rounded py-1 px-2 hover:bg-zinc-800"
-          >
-            <span style={{ color: m.user.color }} className="mr-px font-bold">
-              {m.user.name}
-            </span>
-            : {m.content}
-          </p>
-        ))}
-      </div>
+    <div className="custom-scroll max-h-full overflow-y-hidden rounded">
+      {messages.length < visibleMessages && (
+        <p className="h-8 px-2 py-1 text-sm font-semibold text-zinc-600">
+          Welcome to the chat room!
+        </p>
+      )}
+      {messages.map((m, i) => (
+        <p
+          key={`fakeChatMsg ${m.user} ${i}`}
+          className="rounded py-1 px-2 hover:bg-zinc-800"
+        >
+          <span style={{ color: m.user.color }} className="mr-px font-bold">
+            {m.user.name}
+          </span>
+          : {m.content}
+        </p>
+      ))}
     </div>
   );
 };

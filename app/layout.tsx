@@ -20,7 +20,7 @@ export default async function RootLayout({
       <body className="bg-zinc-900">
         <Navbar session={session} />
         <ToastWrapper />
-        <main className="min-h-screen pt-[60px]">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

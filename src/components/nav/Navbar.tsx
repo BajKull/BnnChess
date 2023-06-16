@@ -26,8 +26,8 @@ const Navbar = ({ session }: IProps) => {
 
   useOnClickOutside(contextMenuRef, () => setShowContextMenu(false));
   return (
-    <nav className="absolute top-0 left-0 h-[60px] w-full rounded bg-transparent px-2 py-2.5 sm:px-4">
-      <div className="container mx-auto flex h-full flex-wrap items-center justify-between">
+    <nav className="mx-auto h-[60px] w-full max-w-7xl rounded bg-transparent py-2.5 px-5">
+      <div className="mx-auto flex h-full flex-wrap items-center justify-between">
         <Link
           href={ROUTES.HOME}
           className="flex items-center text-3xl font-semibold text-white"
