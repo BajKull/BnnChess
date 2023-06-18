@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import TwitchButton from "@/components/button/twitch/TwitchButton";
+import CustomLink from "@/components/link/CustomLink";
+import { ROUTES } from "@/constants/routes";
 
 export const metadata: Metadata = {
   title: "BnnChess",
@@ -28,9 +30,13 @@ export default async function Home() {
             Host a match where your viewers can finally challenge you all at
             once. No need to install or setup anything.
           </p>
-          <Button primary size="xl" className="mx-auto mt-7 w-fit lg:mx-0">
+          <CustomLink
+            size="xl"
+            className="mx-auto mt-7 w-fit lg:mx-0"
+            href={ROUTES.PLAY}
+          >
             Play now!
-          </Button>
+          </CustomLink>
         </div>
         <div className="h-[416px]">
           <FakeChat visibleMessages={13} />
@@ -46,9 +52,9 @@ export default async function Home() {
         </p>
         <HowToPlay />
         {session ? (
-          <Button primary className="mx-auto mt-10 block" size="large">
+          <CustomLink className="mx-auto mt-10 block" href={ROUTES.PLAY}>
             Host a match
-          </Button>
+          </CustomLink>
         ) : (
           <TwitchButton></TwitchButton>
         )}
