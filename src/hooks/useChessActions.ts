@@ -63,6 +63,7 @@ const useChessActions = () => {
         if (game.isStalemate()) setGameOver("draw");
         else if (game.isThreefoldRepetition()) setGameOver("draw");
         else if (game.isInsufficientMaterial()) setGameOver("draw");
+        else if (game.isDraw()) setGameOver("draw");
         else setGameOver(game.turn());
         return;
       }
