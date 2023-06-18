@@ -6,24 +6,17 @@ import { redirect } from "next/navigation";
 import ChatPanel from "@/views/chat/ChatPanel";
 import PlayerAvatar from "@/views/gameSettings/PlayerAvatar";
 
-interface Params {
-  params: { twitchName: string };
-}
-
-export async function generateMetadata({ params }: Params) {
+export async function generateMetadata() {
   const nick = await getServerSession(authOptions);
-  const twitchName = params.twitchName;
   return {
-    title: `BnnChess | ${nick?.user.name || twitchName}`,
+    title: `BnnChess | ${nick?.user.name}`,
   };
 }
 
-export default async function Page({ params }: Params) {
+export default async function Page() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user.name) return redirect(ROUTES.HOME);
-  if (session?.user.name.toLowerCase() !== params.twitchName.toLowerCase())
-    return redirect(`/${session?.user.name.toLowerCase()}/play`);
 
   return (
     <div
@@ -40,7 +33,7 @@ export default async function Page({ params }: Params) {
       >
         <PlayerAvatar position="top" />
         <div className="mt-[100%] h-0 w-full" />
-        <div className="absolute top-0 left-0 h-full w-full overflow-hidden rounded">
+        <div className="absolute left-0 top-0 h-full w-full overflow-hidden rounded">
           <Chessboard />
         </div>
         <PlayerAvatar position="bottom" />
