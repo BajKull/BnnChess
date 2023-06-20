@@ -8,16 +8,17 @@ interface IProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, IProps>((props, ref) => {
   const { className, error, ...otherProps } = props;
-  const clsInput = classNames(
-    "rounded bg-zinc-800 px-3 py-1 w-full",
+  const clsTextarea = classNames(
+    "rounded bg-zinc-800 px-3 py-1 w-full border",
     className,
     {
+      "border-transparent": !error,
       "border-red-500": error,
     }
   );
   return (
     <>
-      <textarea className={clsInput} {...otherProps} ref={ref} />
+      <textarea className={clsTextarea} {...otherProps} ref={ref} />
       {error?.message && (
         <p className="mt-3 text-sm text-red-500">{error.message}</p>
       )}
