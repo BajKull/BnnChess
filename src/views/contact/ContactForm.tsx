@@ -41,12 +41,7 @@ const ContactForm = () => {
         Message
       </label>
       <Textarea {...register("message")} rows={4} error={errors.subject} />
-      <Button
-        primary
-        type="submit"
-        className="mt-5 block w-[150px]"
-        size="large"
-      >
+      <Button primary type="submit" className="mt-5 block w-full" size="large">
         Send
       </Button>
     </form>

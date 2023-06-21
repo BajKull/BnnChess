@@ -20,7 +20,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, IProps>((props, ref) => {
     <>
       <textarea className={clsTextarea} {...otherProps} ref={ref} />
       {error?.message && (
-        <p className="mt-3 text-sm text-red-500">{error.message}</p>
+        <p className="text-sm text-red-500">{error.message}</p>
       )}
     </>
   );

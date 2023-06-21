@@ -81,7 +81,7 @@ const GameSettings = () => {
           />
         </label>
         <label
-          className="mt-3 mb-2 block text-sm font-medium text-white"
+          className="mb-2 mt-3 block text-sm font-medium text-white"
           htmlFor="moveTime"
         >
           Move time (s)
