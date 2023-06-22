@@ -44,7 +44,7 @@ export default async function Home() {
             <FakeChat visibleMessages={13} />
           </div>
         </section>
-        <section className="mt-16 lg:mt-32">
+        <section className="mt-20 lg:mt-40">
           <h2 className="mb-5 text-center text-3xl font-bold lg:text-4xl">
             Make the game more interactive!
           </h2>
@@ -62,7 +62,7 @@ export default async function Home() {
           )}
         </section>
       </div>
-      <div className="mt-10 w-full lg:mt-10">
+      <div className="mt-10 w-full lg:mt-20">
         <PageStats />
       </div>
     </>

@@ -4,7 +4,7 @@ import React from "react";
 const PageStats = () => {
   return (
     <div className="w-full bg-zinc-800 p-10 text-white lg:py-20">
-      <div className="mx-auto grid max-w-7xl lg:grid-cols-3 lg:px-5">
+      <div className="mx-auto grid max-w-7xl lg:grid-cols-3">
         <div className="px-10 py-5 text-center">
           <span className="text-5xl font-bold text-purple-500 xl:text-7xl">
             <AnimatedNumber from={0} to={475} />
