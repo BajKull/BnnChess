@@ -57,6 +57,8 @@ export const useGameStore = create<GameStore>((set) => ({
         legalMoves: newGame.moves({ verbose: true }),
         boardToRender: newGame.board(),
         lastMove: undefined,
+        piecesTaken: null,
+        gameOver: undefined,
       };
     }),
   piecesTaken: null,

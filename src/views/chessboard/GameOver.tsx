@@ -12,7 +12,6 @@ const GameOver = () => {
   const session = useSessionStore((state) => state.session);
   const setPlayerColor = useGameStore((state) => state.setPlayerColor);
   const restartGame = useGameStore((state) => state.restartGame);
-  const setGameOver = useGameStore((state) => state.setGameOver);
   const setIsChatTurn = useChatStore((state) => state.setIsChatTurn);
   const resetChatMoves = useChatStore((state) => state.resetChatMoves);
 
@@ -21,14 +20,13 @@ const GameOver = () => {
 
     setPlayerColor(color);
     setIsChatTurn(color === "b" ? true : false);
-    setGameOver(undefined);
     restartGame();
     resetChatMoves();
   };
 
   if (!gameOver) return null;
   return (
-    <div className="absolute top-0 left-0 z-20 flex h-full w-full flex-col items-center justify-center bg-zinc-900 bg-opacity-50">
+    <div className="absolute left-0 top-0 z-20 flex h-full w-full flex-col items-center justify-center bg-zinc-900 bg-opacity-50">
       <div className="rounded bg-white p-10 text-center">
         <p className="mb-5 text-xl font-semibold lg:text-3xl">Game over!</p>
         <figure className="relative mx-auto mb-5 flex h-10 w-10 items-center justify-center text-2xl shadow-md lg:h-20 lg:w-20 lg:text-5xl lg:shadow-lg">
