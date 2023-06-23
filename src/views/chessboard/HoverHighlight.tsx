@@ -1,12 +1,14 @@
 import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
 import React from "react";
-import { positionTranslate } from "./utils";
+import { getBoardRotation, positionTranslate } from "./utils";
 
 const HoverHighlight = () => {
   const draggingOver = usePieceStore((state) => state.draggingOver);
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
   const playerColor = useGameStore((state) => state.playerColor);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
+  const boardRotation = getBoardRotation(playerColor, isBoardRotated);
 
   if (!isPieceDragged) return null;
   return (
@@ -16,7 +18,7 @@ const HoverHighlight = () => {
       style={positionTranslate({
         rank: draggingOver?.rank,
         file: draggingOver?.file,
-        playerColor,
+        reversed: boardRotation,
       })}
       shapeRendering="crispEdges"
     >

@@ -42,6 +42,8 @@ interface GameStore {
   setShowPromotionScreen: (v?: Move) => void;
   gameOver?: GameOverValue;
   setGameOver: (v?: GameOverValue) => void;
+  isBoardRotated: boolean;
+  toggleIsBoardRotated: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -100,6 +102,9 @@ export const useGameStore = create<GameStore>((set) => ({
   setShowPromotionScreen: (v) => set(() => ({ showPromotionScreen: v })),
   gameOver: undefined,
   setGameOver: (v) => set(() => ({ gameOver: v })),
+  isBoardRotated: false,
+  toggleIsBoardRotated: () =>
+    set((state) => ({ isBoardRotated: !state.isBoardRotated })),
 }));
 
 const getPieceValue = (p: PieceSymbol) => {

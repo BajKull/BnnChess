@@ -15,6 +15,7 @@ import ClickedHighlight from "./ClickedHighlight";
 import PromotionScreen from "./PromotionScreen";
 import GameOver from "./GameOver";
 import Tutorials from "../tutorials/Tutorials";
+import { getBoardRotation } from "./utils";
 
 const Chessboard = () => {
   const game = useGameStore((state) => state.game);
@@ -23,9 +24,12 @@ const Chessboard = () => {
     .filter(Boolean);
   const playerColor = useGameStore((state) => state.playerColor);
   const gameState = useGameStore((state) => state.gameState);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
 
-  const renderRanks = playerColor === "w" ? [...ranks].reverse() : ranks;
-  const renderFiles = playerColor === "w" ? files : [...files].reverse();
+  const boardRotation = getBoardRotation(playerColor, isBoardRotated);
+
+  const renderRanks = boardRotation ? [...ranks].reverse() : ranks;
+  const renderFiles = boardRotation ? files : [...files].reverse();
 
   const getSquare = (rank: ChessboardRank, file: ChessboardFile) =>
     gameBoard.find((el) => el?.square === `${file}${rank}`);
@@ -37,15 +41,17 @@ const Chessboard = () => {
   return (
     <>
       <div className={clsDiv}>
-        {renderRanks.map((rank) => (
+        {renderRanks.map((rank, i) => (
           <div key={nanoid()} className="flex h-[12.5%] w-full">
-            {renderFiles.map((file) => {
+            {renderFiles.map((file, j) => {
               const square = getSquare(rank, file);
               return (
                 <div className="h-full w-[12.5%]" key={nanoid()}>
                   <Square
                     rank={rank}
                     file={file}
+                    row={i}
+                    col={j}
                     occupiedBy={game.get(`${file}${rank}`)}
                   >
                     {square && (

@@ -4,7 +4,7 @@ import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 import { Square } from "chess.js";
 import { nanoid } from "nanoid";
 import React from "react";
-import { positionTranslate } from "./utils";
+import { getBoardRotation, positionTranslate } from "./utils";
 
 const HelpMoveDots = () => {
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
@@ -37,6 +37,8 @@ const HelpMoveDots = () => {
 
 const MoveDot = ({ position, flags }: { position: Square; flags: string }) => {
   const playerColor = useGameStore((state) => state.playerColor);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
+  const boardRotation = getBoardRotation(playerColor, isBoardRotated);
   const [file, rank] = position.split("");
 
   return (
@@ -46,7 +48,7 @@ const MoveDot = ({ position, flags }: { position: Square; flags: string }) => {
       style={positionTranslate({
         rank: parseInt(rank) as ChessboardRank,
         file: file as ChessboardFile,
-        playerColor,
+        reversed: boardRotation,
       })}
     >
       <circle

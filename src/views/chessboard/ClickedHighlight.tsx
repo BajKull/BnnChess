@@ -1,7 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { usePieceStore } from "@/store/pieceStore";
 import React from "react";
-import { positionTranslate } from "./utils";
+import { getBoardRotation, positionTranslate } from "./utils";
 import colors from "tailwindcss/colors";
 
 const ClickedHighlight = () => {
@@ -10,6 +10,8 @@ const ClickedHighlight = () => {
   const isPieceDragged = usePieceStore((state) => state.isPieceDragged);
   const isPieceClicked = usePieceStore((state) => state.isPieceClicked);
   const playerColor = useGameStore((state) => state.playerColor);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
+  const boardRotation = getBoardRotation(playerColor, isBoardRotated);
 
   if (!isPieceDragged && !isPieceClicked) return null;
   return (
@@ -19,7 +21,7 @@ const ClickedHighlight = () => {
       style={positionTranslate({
         rank: draggedPiece?.rank || clickedPiece?.rank,
         file: draggedPiece?.file || clickedPiece?.file,
-        playerColor,
+        reversed: boardRotation,
       })}
       shapeRendering="crispEdges"
     >

@@ -1,12 +1,14 @@
 import { useGameStore } from "@/store/gameStore";
 import React from "react";
-import { positionTranslate } from "./utils";
+import { getBoardRotation, positionTranslate } from "./utils";
 import colors from "tailwindcss/colors";
 import { ChessboardFile, ChessboardRank } from "@/types/chessboard";
 
 const LastMoveHighlight = () => {
   const lastMove = useGameStore((state) => state.lastMove);
   const playerColor = useGameStore((state) => state.playerColor);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
+  const boardRotation = getBoardRotation(playerColor, isBoardRotated);
   if (!lastMove) return null;
 
   const [fromFile, fromRank] = lastMove.from.split("");
@@ -20,7 +22,7 @@ const LastMoveHighlight = () => {
         style={positionTranslate({
           rank: parseInt(fromRank) as ChessboardRank,
           file: fromFile as ChessboardFile,
-          playerColor,
+          reversed: boardRotation,
         })}
         shapeRendering="crispEdges"
       >
@@ -39,7 +41,7 @@ const LastMoveHighlight = () => {
         style={positionTranslate({
           rank: parseInt(toRank) as ChessboardRank,
           file: toFile as ChessboardFile,
-          playerColor,
+          reversed: boardRotation,
         })}
         shapeRendering="crispEdges"
       >

@@ -6,6 +6,7 @@ import { useSessionStore } from "@/store/sessionStore";
 import React from "react";
 import GigaChadImage from "@/../public/images/gigachad.webp";
 import classNames from "classnames";
+import { getBoardRotation } from "../chessboard/utils";
 
 interface IProps {
   position: "top" | "bottom";
@@ -14,6 +15,7 @@ interface IProps {
 const PlayerAvatar = ({ position }: IProps) => {
   const session = useSessionStore((state) => state.session);
   const playerColor = useGameStore((state) => state.playerColor);
+  const isBoardRotated = useGameStore((state) => state.isBoardRotated);
 
   const piecesTaken = useGameStore((state) => state.piecesTaken);
   const whitePiecesTaken = piecesTaken?.white;
@@ -24,7 +26,10 @@ const PlayerAvatar = ({ position }: IProps) => {
     "-bottom-[34px] lg:-bottom-[50px]": position === "bottom",
   });
 
-  if (position === "bottom")
+  if (
+    (position === "bottom" && !isBoardRotated) ||
+    (position === "top" && isBoardRotated)
+  )
     return (
       <Avatar
         name={session?.user?.name}

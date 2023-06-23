@@ -13,12 +13,16 @@ import { useChatStore } from "@/store/chatMovesStore";
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   rank: ChessboardRank;
   file: ChessboardFile;
+  row: number;
+  col: number;
   occupiedBy: Piece | null;
 }
 
 const Square = ({
   rank,
   file,
+  row,
+  col,
   className,
   children,
   occupiedBy,
@@ -41,7 +45,6 @@ const Square = ({
   }));
 
   const dragOffset = useRef<[number, number]>([0, 0]);
-  const playerColor = useGameStore((state) => state.playerColor);
   const isChatTurn = useChatStore((state) => state.isChatTurn);
 
   const cancelDragRef = useRef(false);
@@ -184,22 +187,12 @@ const Square = ({
       {...rest}
       onMouseDown={handleMouseDown}
     >
-      {playerColor === "w" && rank === 1 && (
-        <span className={clsText("rank")}>{file}</span>
-      )}
-      {playerColor === "b" && rank === 8 && (
-        <span className={clsText("rank")}>{file}</span>
-      )}
-      {playerColor === "w" && file === "a" && (
-        <span className={clsText("file")}>{rank}</span>
-      )}
-      {playerColor === "b" && file === "h" && (
-        <span className={clsText("file")}>{rank}</span>
-      )}
+      {row === 7 && <span className={clsText("rank")}>{file}</span>}
+      {col === 0 && <span className={clsText("file")}>{rank}</span>}
       {children && (
         <a.div
           {...bind()}
-          className="absolute top-0 left-0 z-10 h-full w-full "
+          className="absolute left-0 top-0 z-10 h-full w-full "
           style={style}
         >
           {children}

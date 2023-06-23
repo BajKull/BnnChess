@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import ChatPanel from "@/views/chat/ChatPanel";
 import PlayerAvatar from "@/views/gameSettings/PlayerAvatar";
+import DisplayOptions from "@/views/chessboard/DisplayOptions";
 
 export async function generateMetadata() {
   const nick = await getServerSession(authOptions);
@@ -37,6 +38,7 @@ export default async function Page() {
           <Chessboard />
         </div>
         <PlayerAvatar position="bottom" />
+        <DisplayOptions />
       </div>
       <div className="h-[75vmin] min-h-[300px] w-[500px] lg:static 2xl:w-[700px]">
         <ChatPanel />

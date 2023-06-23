@@ -13,15 +13,19 @@ export const fileToValue = (file?: ChessboardFile, reversed?: boolean) => {
 type PositionTranslate = {
   rank?: ChessboardRank;
   file?: ChessboardFile;
-  playerColor: Color;
+  reversed: boolean;
 };
+
+export const getBoardRotation = (playerColor: Color, isBoardRotated: boolean) =>
+  (playerColor === "w" && !isBoardRotated) ||
+  (playerColor === "b" && isBoardRotated);
 
 export const positionTranslate = ({
   rank = 1,
   file = "a",
-  playerColor,
+  reversed,
 }: PositionTranslate) => {
-  if (playerColor === "w")
+  if (reversed)
     return {
       transform: `translateX(${fileToValue(file) * 100 - 100}%) translateY(-${
         rank * 100 - 100
